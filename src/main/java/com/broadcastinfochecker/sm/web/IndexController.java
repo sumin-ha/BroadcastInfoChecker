@@ -1,5 +1,6 @@
 package com.broadcastinfochecker.sm.web;
 
+import com.broadcastinfochecker.sm.service.TwitterLoadingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
+
+    private TwitterLoadingService twitterLoadingService;
 
     // 접속 메인 페이지
     @GetMapping("/")
@@ -30,7 +33,10 @@ public class IndexController {
     // 방송 정보를 취득하고 구글 캘린더 등록, 트위터 알림용 등록을 위한 데이터 정제 화면 요청
     @GetMapping("/menuInfoGetList")
     public String menuInfoGetList() {
-        return "menuInfoGetList";
+
+        twitterLoadingService.TestTwitterLoading();
+        return "index";
+        //return "menuInfoGetList";
     }
 
     // 트위터 알림용으로 정제한 내용을 확인하는 화면 요청

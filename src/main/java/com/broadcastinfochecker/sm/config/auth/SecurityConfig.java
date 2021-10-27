@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**",
-                        "/js/**", "/h2-console/**", "/profile").permitAll() // 인증없이 호출 되는 부분
+                        "/js/**", "/h2-console/**", "/profile", "/api/tweet/**").permitAll() // 인증없이 호출 되는 부분
                 //.antMatchers("/api/v1/**").hasRole(Role.USER.name()) // 인증이 되어야 열리는 부분의 권한 설정
                 .anyRequest().authenticated()
                 .and()

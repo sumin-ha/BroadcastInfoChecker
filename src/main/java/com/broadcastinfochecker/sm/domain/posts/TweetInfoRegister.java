@@ -13,22 +13,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Getter
-@Table(name="InfoRegister")
-public class InfoRegister extends BaseTimeEntity {
+public class TweetInfoRegister extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 500, nullable = false)
+    @Column(length = 100, nullable = false)
     private String twitterId;
 
-    @Column(length = 500, nullable = false)
-    private String keyword;
+    @Column(length = 100, nullable = false)
+    private String searchKeyword;
 
     @Builder
-    public InfoRegister(String twitterId, String keyword) {
+    public TweetInfoRegister(String twitterId, String searchKeyword) {
         this.twitterId = twitterId;
-        this.keyword = keyword;
+        this.searchKeyword = searchKeyword;
     }
 }

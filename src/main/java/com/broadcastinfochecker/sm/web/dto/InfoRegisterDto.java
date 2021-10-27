@@ -1,6 +1,6 @@
 package com.broadcastinfochecker.sm.web.dto;
 
-import com.broadcastinfochecker.sm.domain.posts.InfoRegister;
+import com.broadcastinfochecker.sm.domain.posts.TweetInfoRegister;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +21,7 @@ public class InfoRegisterDto {
     private String keyword;
 
     // DB에 들어갈 Entity를 생성한다.
-    public InfoRegister toEntity() {
-        return InfoRegister.builder().twitterId(twitterAccount).keyword(keyword).build();
+    public TweetInfoRegister toEntity() {
+        return TweetInfoRegister.builder().twitterId(twitterAccount).searchKeyword(keyword).build();
     }
 }
