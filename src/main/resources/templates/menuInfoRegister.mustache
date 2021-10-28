@@ -1,0 +1,43 @@
+{{>layout/header}}
+
+
+<div class="col-md-12">
+    <h1>Test!!!</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <button id="link-menuInfoRegister" class="btn btn-primary">알리미 추가 및 수정</button>
+            </div>
+            <div class="row">
+                <button id="btn-menuInfoGetList" class="btn btn-primary">방송 정보 취득</button>
+            </div>
+            <div class="row">
+                <button id="btn-menuInfoCheck" class="btn btn-primary">등록 내용 확인</button>
+            </div>
+            <div class="row">
+                <button id="btn-menuInfoRegister" class="btn btn-primary">정보 수동 등록</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-2">계정명</label>
+                        <input id="twitterAccount" type="text" class="form-control" placeholder="@는 제외해주세요."/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-2">검색 기준 단어</label>
+                        <input id="keyword" type="text" class="form-control" placeholder="여러개일 경우 , 로 구분해주세요."/>
+                    </div>
+                </div>
+            </form>
+
+            <a href="/" class="btn btn-secondary">취소</a>
+            <button id="btn-menu-info-register" class="btn btn-primary">정보 등록</button>
+        </div>
+    </div>
+</div>
+
+{{>layout/footer}}

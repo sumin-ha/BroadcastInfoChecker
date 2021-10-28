@@ -1,0 +1,113 @@
+@Data를 사용하지 않고, @Getter를 사용하는 이유 (Entity에서)
+-> 자바빈 규약을 생각하면 무작정 만드는 것도 맞지만,
+해당 인스턴스 값이 언제 어디서 어떻게 변하는지 알 수 없기 때문에 setter를 생성하지 못하게 막기 위함
+대신, 객체값을 변경하려한다면, 용도가 명확한 메서드를 Entity내부에 생성함
+전체 값은 생성자를 이용해 한번에 삽입하는 것으로 대체함.
+
+@Builder를 사용하는 이유
+-> 원하는 자리에 원하는 데이터를 집어넣기 위하여, 빌더를 사용함.
+-> 생성자를 정확하게 사용한다면 굳이 사용하지 않아도 되지만, 가독성을 위해서라도 빌더를 사용하는게 좋음.
+
+@Transactional(readOnly = true) 에서 (readOnly = true)를 사용하는 이유
+-> 조회만 가능하게 해 조회속도 개선
+
+TDD 테스트 주도 개발 / 테스트 코드를 작성하는 이유
+-> 사람이 하기 힘든 부분을 자동화 하기 위함
+-> 코드 리팩토링 시, 라이브러리 업그레이드 시에 기존 기능의 동작 보증 역할
+-> 단위 테스트는 그대로 테스트 문서로 사용가능
+-> 새로운 기능 탑재시, 기존 코드에는 영향이 안간다는 보증
+
+JPA (Java Persistence API)
+-> 사용하고 있는 관계형 데이터베이스에 맞는 SQL코드를 자동생성
+-> 모든 DB통신에 일일이 SQL문을 쓰지않아도 된다는 장점이 존재함.
+-> 구현체를 사용해도 좋으나, 이번 프로젝트에서는 Spring JPA만 사용함.
+
+Spring의 기본구조
+-> View -> Controller -> Service -> Repository -> DB
+-> Service에서 비지니스 로직을 처리함
+-> Repository에서 JPA 관련 처리 실장
+-> Repository는 인터페이스. 해당 테이블에 대한 JPA 기능 실장
+-> 즉, 테이블 별로 레포지토리가 존재함.
+
+JPA 기본 메소드로도 가능하지만 @Query를 사용하는 이유
+-> 가독성
+
+★ querydsl -> 조회용 프레임워크
+jooq나 Mybatis도 존재하지만 querydsl가 추천이라고 함.
+(일본에서 썼던 Doma2와 비슷한 느낌이라고 생각하면 될듯.)
+
+@RequiredArgsConstructor
+-> 생성자가 하나밖에 없는 객체라면 Autowired가 없어도 의존성 주입가능.
+
+객체 직렬화란? (Serializable)
+-> 객체를 전송 가능한 형태로 바꿔주는 것.
+DTO 객체 내부에, 또 다른 클래스 변수가 존재한다면 그 객체또한 직렬화 되어있어야함.
+파일로 저장할 일이 있을 때, 저장된 객체를 읽어야 할 때, 다른 서버에서 생성된 객체를 읽어야 할 때 등등
+
+HandlerMethodArgumentResolver 의 추가에 대해서
+-> >>>> 알아봐야함 <<<<<
+
+@EnableJpaAuditing를 Application.java에서 JpaConfig.java로 이동 한 후,
+JPA를 통해 삽입, 수정일시가 자동으로 적용되지 않아 에러나는 테스트가 존재함.
+>> @WebMvcTest를 사용시, 최소 하나의 @Entity가 필요하나, @WebMvcTest를 쓸 때는 사용하지 않음
+>> @WebMvcTest는 장차 없어질 예정이므로 되도록이면 사용하지 않아야함.
+
+1012 에러 및 해결법
+1. 인텔리제이에서 DB접속이 불가한 부분 -> postgresql이 문제일 가능성이 있으므로 보류
+-> ec2에서 직접 접속은 가능하므로 진행상 문제는 없음
+2. ec2에서 자바 컴파일이 안되는 부분
+-> 자바 버전 불일치 (로컬 : 11 , ec2 : 1.8)
+https://freelearn.tistory.com/17
+https://lemontia.tistory.com/941
+-> 추가 에러 -> BaseTimeEntity의 자바파일 오류
+
+aws의 commit_memory 에러 대처
+-> https://m.blog.naver.com/icet25/221888979918
+
+java.sql.SQLException: Table 'test_springboot.posts' doesn't exist
+-> @Table(name="Posts") 적용
+-> org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [DELETE FROM SPRING_SESSION WHERE EXPIRY_TIME < ?]; 발생
+-> MariaDB의 lower_case_table_names 를 1로(대소문자 구분하지않음) 수정
+-> DB 리붓 후 로딩테스트
+
+1015 CI/CD에 대해서
+-> CI란, 자동으로 코드를 병합하는 것. 지속적인 통합
+-> CD란, 자동으로 배포하는 것. 지속적인 배포
+즉, 각 개발자들이 작업한 코드가 푸쉬되면, 자동화 된 코드가 코드를 병합해주고,
+그 병합된 코드를 자동화 된 테스트 후, 자동화 된 배포코드를 통해 배포 되는 것.
+그리고 각 개발자들은 그 코드를 내려받아 다음 개발을 진행할 수 있게 도와주는 자동화 도구
+
+유의점으로는
+- 누구든 현재 소스에 접근할 수 있는 단일 지점을 유지.
+- 빌드 프로세스를 자동화하여, 누구든 단일 명령어로 빌드 작업을 가능하게 할 것.
+- 테스팅을 자동화하여, 누구든 명령어 하나로 테스트 수트를 실행할 수 있게 할 것.
+- 누구든 현재 실행 파일에 대해 가장 완전한 실행 파일이라고 확신을 가질 수 있게 할 것.
+테스팅이 특히 중요하다고 함.
+
+/home/travis/.travis/functions: line 351: ./gradlew: Permission denied 에러
+The command "eval ./gradlew assemble
+-> gradlew 의 권한 문제
+https://stackoverflow.com/questions/33820638/travis-yml-gradlew-permission-denied
+
+Travis CI로는 코드를 빌드하는 것까지.
+(.jar 파일화)
+그리고 AWS CodeDeploy로 코드를 배포 (CD)
+
+Travis -> S3 -> AWS CodeDeploy (.jar의 흐름)
+
+
+버전을 바꾸었 을 때, 배포가 안되는 문제에 대해서
+-> deploy.sh를 짤 때, 현재 구동중인 구버전 프로그램을 죽이는 부분에서 원활하게 움직이지 않음.
+-> CURRENT_PID=$(pgrep -fl testSpring | grep jar | awk '{print $1}')
+-> 죽일 프로그램을 찾을 때, pgrep의 옵션을 fl로 줘버려서, 라인단위로 찾는게 문제가 아닐까?
+-> CURRENT_PID=$(pgrep -fl testSpring | awk '{print $1}')
+-> grap 옵션을 제거하니 제대로 pid를 습득함. 이걸로 시도
+-> 성공했음.
+
+
+인텔리제이의 고유에러
+> https://ottl-seo.tistory.com/entry/IntelliJ-Cannot-resolve-symbol-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0
+> import문제
+
+twitter 계정의 System.getProperty() 설정 필요
+https://javabydeveloper.com/gradle-system-properties-via-command-line-step-by-step-example/

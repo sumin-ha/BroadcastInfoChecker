@@ -22,6 +22,6 @@ public class InfoRegisterDto {
 
     // DB에 들어갈 Entity를 생성한다.
     public TweetInfoRegister toEntity() {
-        return TweetInfoRegister.builder().twitterId(twitterAccount).searchKeyword(keyword).build();
+        return TweetInfoRegister.builder().twitterAccount(twitterAccount).searchKeyword(keyword).build();
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostApiService {
 
-    private TweetInfoRegisterRepository infoRegisterRepository;
+    private final TweetInfoRegisterRepository infoRegisterRepository;
 
     // 추출 정보 등록
     @Transactional

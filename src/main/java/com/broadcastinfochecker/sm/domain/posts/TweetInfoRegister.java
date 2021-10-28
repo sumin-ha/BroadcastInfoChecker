@@ -20,14 +20,14 @@ public class TweetInfoRegister extends BaseTimeEntity {
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String twitterId;
+    private String twitterAccount;
 
     @Column(length = 100, nullable = false)
     private String searchKeyword;
 
     @Builder
-    public TweetInfoRegister(String twitterId, String searchKeyword) {
-        this.twitterId = twitterId;
+    public TweetInfoRegister(String twitterAccount, String searchKeyword) {
+        this.twitterAccount = twitterAccount;
         this.searchKeyword = searchKeyword;
     }
 }

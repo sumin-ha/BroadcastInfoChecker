@@ -1,17 +1,28 @@
 package com.broadcastinfochecker.sm.web;
 
+import com.broadcastinfochecker.sm.service.PostApiService;
 import com.broadcastinfochecker.sm.service.TwitterLoadingService;
+import com.broadcastinfochecker.sm.web.dto.InfoRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
 
+    private final PostApiService postApiService;
     private final TwitterLoadingService twitterLoadingService;
+
+    // 트위터 계정 & 키워드 등록용
+    @PostMapping("api/account/register")
+    public Long menuInfoRegister(@RequestBody InfoRegisterDto requestDto) {
+        return postApiService.infoRegisterSave(requestDto);
+    }
 
     @GetMapping("/api/tweet/test")
     public String index() {

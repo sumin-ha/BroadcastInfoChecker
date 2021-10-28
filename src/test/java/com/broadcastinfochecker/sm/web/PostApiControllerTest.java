@@ -28,14 +28,14 @@ public class PostApiControllerTest {
     @Test
     public void loadingTest() {
         infoRegisterRepository.save(TweetInfoRegister.builder()
-                .twitterId("@Taka_Ayase")
+                .twitterAccount("@Taka_Ayase")
                 .searchKeyword("テストキーワード")
                 .build());
 
         List<TweetInfoRegister> infoRegisterList = infoRegisterRepository.findAll();
 
         TweetInfoRegister infoRegister = infoRegisterList.get(0);
-        assertThat(infoRegister.getTwitterId()).isEqualTo("@Taka_Ayase");
+        assertThat(infoRegister.getTwitterAccount()).isEqualTo("@Taka_Ayase");
         assertThat(infoRegister.getSearchKeyword()).isEqualTo("テストキーワード");
     }
 }
