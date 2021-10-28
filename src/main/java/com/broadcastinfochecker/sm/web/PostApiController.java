@@ -1,16 +1,24 @@
 package com.broadcastinfochecker.sm.web;
 
+import com.broadcastinfochecker.sm.domain.posts.TweetInfoRegister;
+import com.broadcastinfochecker.sm.service.ListLoadService;
 import com.broadcastinfochecker.sm.service.PostApiService;
 import com.broadcastinfochecker.sm.service.TwitterLoadingService;
 import com.broadcastinfochecker.sm.web.dto.InfoRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+/**
+ * post api 요청을 수신하는 컨트롤러
+ */
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {

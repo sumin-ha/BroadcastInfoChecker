@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+/**
+ * post 처리를 담당하는 서비스
+ */
 @RequiredArgsConstructor
 @Service
 public class PostApiService {
@@ -16,6 +21,15 @@ public class PostApiService {
     // 추출 정보 등록
     @Transactional
     public Long infoRegisterSave(InfoRegisterDto requestDto) {
+        List<TweetInfoRegister> infoRegisterDtoList =
+                infoRegisterRepository.findAll();
+        for(TweetInfoRegister dto : infoRegisterDtoList) {
+            // 이미 등록 된 계정 정보라면 해당 정보를 삭제함.
+            if(dto.getTwitterAccount().equals(requestDto.getTwitterAccount())) {
+                infoRegisterRepository.delete(dto);
+            }
+        }
+        // 등록
         return infoRegisterRepository.save(requestDto.toEntity()).getId();
     }
 

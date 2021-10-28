@@ -19,12 +19,10 @@ var main = {
     },
 
     linkMenuInfoRegister : function () {
-        alert("알리미 등록 이동");
         location.href = '/menuInfoRegister';
     },
 
     infoRegisterSave : function () {
-        alert("알리미 db 등록");
         var data = {
             twitterAccount : $('#twitterAccount').val(),
             keyword : $('#keyword').val()
@@ -36,7 +34,7 @@ var main = {
             dataType:'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
+        }).done(function(data) {
             alert('정보가 등록되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {

@@ -1,16 +1,21 @@
 package com.broadcastinfochecker.sm.web;
 
+import com.broadcastinfochecker.sm.service.ListLoadService;
 import com.broadcastinfochecker.sm.service.TwitterLoadingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * 화면 컨트롤러
+ */
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
-    private TwitterLoadingService twitterLoadingService;
+    private final ListLoadService listLoadService;
+    private final TwitterLoadingService twitterLoadingService;
 
     // 접속 메인 페이지
     @GetMapping("/")
@@ -26,7 +31,9 @@ public class IndexController {
 
     // 알리미 추가 및 수정 화면 요청
     @GetMapping("/menuInfoRegister")
-    public String menuInfoRegister() {
+    public String menuInfoRegister(Model model) {
+        // 화면에 돌려주는 모델에 리스트 데이터를 담음
+        model.addAttribute("posts", listLoadService.getInfoRegisterList());
         return "menuInfoRegister";
     }
 
