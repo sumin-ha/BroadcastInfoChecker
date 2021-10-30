@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public class PostApiService {
 
+    private final TwitterLoadingService twitterLoadingService;
+
     private final TweetInfoRegisterRepository infoRegisterRepository;
 
     // 추출 정보 등록
@@ -27,6 +29,9 @@ public class PostApiService {
             // 이미 등록 된 계정 정보라면 해당 정보를 삭제함.
             if(dto.getTwitterAccount().equals(requestDto.getTwitterAccount())) {
                 infoRegisterRepository.delete(dto);
+                if(requestDto.getKeyword().isEmpty()) {
+                    return 0L;
+                }
             }
         }
         // 등록
@@ -40,5 +45,15 @@ public class PostApiService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         infoRegisterRepository.delete(infoRegister);
+    }
+
+    // 등록 된 계정 정보를 이용, 트위터 데이터 추출하는 메서드
+    @Transactional
+    public void infoGetList() {
+        // 등록 된 계정 정보를 불러옴.
+        List<TweetInfoRegister> infoRegisterDtoList =
+                infoRegisterRepository.findAll();
+        // 추출 작업 시작
+        twitterLoadingService.infoGetList(infoRegisterDtoList);
     }
 }

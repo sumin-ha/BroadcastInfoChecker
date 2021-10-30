@@ -7,8 +7,8 @@ var main = {
         $('#btn-menu-info-register').on('click', function() {
             _this.infoRegisterSave();
         }),
-        $('#btn-menuInfoGetList').on('click', function() {
-            _this.update();
+        $('#link-menuInfoGetList').on('click', function() {
+            _this.infoGetList(); // /
         }),
         $('#btn-menuInfoCheck').on('click', function() {
             _this.update();
@@ -42,8 +42,18 @@ var main = {
         });
     },
 
-    update : function () {
-
+    infoGetList : function () {
+        $.ajax({
+            type:'POST',
+            url:'/api/get/info',
+            dataType:'json',
+            contentType:'application/json; charset=utf-8'
+        }).done(function(data) {
+            alert('정보가 추출되었습니다.');
+            window.location.href = '/menuInfoGetList';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
     },
     delete : function () {
 

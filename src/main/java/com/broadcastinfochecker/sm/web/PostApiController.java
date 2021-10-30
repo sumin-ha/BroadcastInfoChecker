@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,13 @@ public class PostApiController {
     @PostMapping("api/account/register")
     public Long menuInfoRegister(@RequestBody InfoRegisterDto requestDto) {
         return postApiService.infoRegisterSave(requestDto);
+    }
+
+    // 등록한 계정&키워드를 가지고 트위터 api와 연동, 원하는 정보를 습득하는 메서드
+    @PostMapping("/api/get/info")
+    public Long menuInfoGetList() {
+        postApiService.infoGetList();
+        return 0L;
     }
 
     @GetMapping("/api/tweet/test")
