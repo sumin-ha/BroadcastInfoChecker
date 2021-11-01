@@ -49,13 +49,15 @@ public class IndexController {
 
     // 트위터 알림용으로 정제한 내용을 확인하는 화면 요청
     @GetMapping("/menuInfoCheck")
-    public String menuInfoCheck() {
+    public String menuInfoCheck(Model model) {
+        // 화면에 돌려주는 모델에 리스트 데이터를 담음
+        model.addAttribute("posts", listLoadService.getInfoList());
         return "menuInfoCheck";
     }
 
     // 정제한 내용을 수동으로 등록하는 화면 요청
     @GetMapping("/menuInfoManualRegister")
-    public String menuInfoManualRegister() {
+    public String menuInfoManualRegister(Model model) {
         return "menuInfoManualRegister";
     }
 
