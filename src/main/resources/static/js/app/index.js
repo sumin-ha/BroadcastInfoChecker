@@ -8,7 +8,10 @@ var main = {
             _this.infoRegisterSave();
         }),
         $('#link-menuInfoGetList').on('click', function() {
-            _this.infoGetList(); // /
+            _this.infoGetList();
+        }),
+        $('#btn-menu-info-get-List').on('click', function() {
+            _this.infoGetListRegister();
         }),
         $('#btn-menuInfoCheck').on('click', function() {
             _this.update();
@@ -55,6 +58,23 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
+
+    infoGetListRegister: function () {
+
+
+//        $.ajax({
+//            type:'POST',
+//            url:'/api/get/info',
+//            dataType:'json',
+//            contentType:'application/json; charset=utf-8'
+//        }).done(function(data) {
+//            alert('정보가 추출되었습니다.');
+//            window.location.href = '/menuInfoGetList';
+//        }).fail(function (error) {
+//            alert(JSON.stringify(error));
+//        });
+    },
+
     delete : function () {
 
     }
