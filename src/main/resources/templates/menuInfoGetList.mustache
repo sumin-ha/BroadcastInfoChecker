@@ -12,10 +12,10 @@
                 <button id="link-menuInfoGetList" class="btn btn-primary">방송 정보 취득</button>
             </div>
             <div class="row">
-                <button id="btn-menuInfoCheck" class="btn btn-primary">등록 내용 확인</button>
+                <button id="link-menuInfoCheck" class="btn btn-primary">등록 내용 확인</button>
             </div>
             <div class="row">
-                <button id="btn-menuInfoRegister" class="btn btn-primary">정보 수동 등록</button>
+                <button id="link-menuInfoRegister" class="btn btn-primary">정보 수동 등록</button>
             </div>
         </div>
         <div class="col-md-8">
@@ -31,9 +31,6 @@
             </div>
             <hr />
             <div>
-            {
-                "count" : 1
-            }
             {{#posts}}
                 <form>
                     <div class="input-group">
@@ -58,7 +55,8 @@
                             <a href="https://twitter.com/{{tweetAccount}}/status/{{source}}"
                                class="btn btn-success active col-md-1" role="button">출처</a>
                             <label class="col-md-3">등록 하실거라면 체크</label>
-                            <input class="form-control" type="checkbox" id="{{source}}"/>
+                            <input class="form-control" type="checkbox" id="check" value="{{source}}"/>
+                            <input type="hidden" value="{{tweetAccount}}" id="account{{source}}" />
                         </div>
                     </div>
                 </form>

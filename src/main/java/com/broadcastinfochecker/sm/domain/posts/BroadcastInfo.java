@@ -36,16 +36,21 @@ public class BroadcastInfo extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDateTime broadcastDate;
 
+    // 트위터 계정명
+    @Column(nullable = false)
+    private String tweetAccount;
+
     // 방송 정보 출처
     @Column(nullable = false)
     private String source;
 
     @Builder
-    public BroadcastInfo(String title, String context, String tag, LocalDateTime broadcastDate, String source) {
+    public BroadcastInfo(String title, String context, String tag, LocalDateTime broadcastDate, String source, String tweetAccount) {
         this.title = title;
         this.context = context;
         this.tag = tag;
         this.broadcastDate = broadcastDate;
         this.source = source;
+        this.tweetAccount = tweetAccount;
     }
 }
