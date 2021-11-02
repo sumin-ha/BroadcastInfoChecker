@@ -74,15 +74,15 @@ var main = {
     infoGetListRegister: function () {
         var data = [];
         $('input[type="checkbox"]:checked').each(function() {
-            var CheckVal = $(this).val();
+            var checkVal = $(this).val();
 
             let user = {
-                broadcastTitle : $('#broadcastTitle'+CheckVal).val(),
-                broadcastContext : $('#broadcastContext'+CheckVal).val(),
-                broadcastTag : $('#broadcastTag'+CheckVal).val(),
-                broadcastDate : $('#broadcastDate'+CheckVal).val(),
-                tweetAccount : $('#account'+CheckVal).val(),
-                source : CheckVal
+                broadcastTitle : $('#broadcastTitle'+checkVal).val(),
+                broadcastContext : $('#broadcastContext'+checkVal).val(),
+                broadcastTag : $('#broadcastTag'+checkVal).val(),
+                broadcastDate : $('#broadcastDate'+checkVal).val(),
+                tweetAccount : $('#account'+checkVal).val(),
+                source : "https://twitter.com/" + $('#account'+checkVal).val() + "/status/" + checkVal
             };
             data.push(user);
         });
@@ -109,16 +109,16 @@ var main = {
     infoCheckUpdate: function () {
         var data = [];
         $('input[type="checkbox"]:checked').each(function() {
-            var CheckVal = $(this).val();
+            var checkVal = $(this).val();
 
             let user = {
-                id : $('#id'+CheckVal).val(),
-                broadcastTitle : $('#broadcastTitle'+CheckVal).val(),
-                broadcastContext : $('#broadcastContext'+CheckVal).val(),
-                broadcastTag : $('#broadcastTag'+CheckVal).val(),
-                broadcastDate : $('#broadcastDate'+CheckVal).val(),
-                tweetAccount : $('#account'+CheckVal).val(),
-                source : CheckVal
+                id : checkVal,
+                broadcastTitle : $('#broadcastTitle'+checkVal).val(),
+                broadcastContext : $('#broadcastContext'+checkVal).val(),
+                broadcastTag : $('#broadcastTag'+checkVal).val(),
+                broadcastDate : $('#broadcastDate'+checkVal).val(),
+                tweetAccount : $('#account'+checkVal).val(),
+                source : $('#url'+checkVal).val()
             };
             data.push(user);
         });
@@ -145,9 +145,8 @@ var main = {
     infoCheckDelete: function () {
         var data = [];
         $('input[type="checkbox"]:checked').each(function() {
-            var CheckVal = $(this).val();
-            var id = $('#id'+CheckVal).val();
-            data.push(id);
+            var checkVal = $(this).val();
+            data.push(checkVal);
         });
 
         if(data.length == 0) {

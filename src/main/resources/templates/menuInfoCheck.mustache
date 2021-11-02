@@ -15,7 +15,7 @@
                 <button id="link-menuInfoCheck" class="btn btn-primary">등록 내용 확인</button>
             </div>
             <div class="row">
-                <button id="link-menuInfoRegister" class="btn btn-primary">정보 수동 등록</button>
+                <button id="link-menuInfoManualRegister" class="btn btn-primary">정보 수동 등록</button>
             </div>
         </div>
         <div class="col-md-8">
@@ -38,29 +38,29 @@
                     <form>
                         <div class="input-group">
                             <label class="col-md-4">방송명 (요약)</label>
-                            <input id="broadcastTitle{{source}}" type="text" class="form-control" placeholder="최대한 간단하게. ex)아쿠아 생방송" value="{{title}}"/>
+                            <input id="broadcastTitle{{id}}" type="text" class="form-control" placeholder="최대한 간단하게. ex)아쿠아 생방송" value="{{title}}"/>
                         </div>
                         <div class="input-group">
                             <label class="col-md-4">방송 정보 내용</label>
-                            <textarea class="form-control" id="broadcastContext{{source}}">{{context}}</textarea>
+                            <textarea class="form-control" id="broadcastContext{{id}}">{{context}}</textarea>
                         </div>
                         <div class="input-group">
                             <label class="col-md-4">방송 정보 태그 (카테고리)</label>
-                            <input id="broadcastTag{{source}}" type="text" class="form-control" placeholder="3개까지 기억됩니다. 여러개일 경우 , 로 구분해주세요." value="{{tag}}"/>
+                            <input id="broadcastTag{{id}}" type="text" class="form-control" placeholder="3개까지 기억됩니다. 여러개일 경우 , 로 구분해주세요." value="{{tag}}"/>
                         </div>
                         <div class="input-group">
                             <label class="col-md-4">방송 정보 일시</label>
-                            <input id="broadcastDate{{source}}" type="datetime-local" class="form-control" placeholder="2020-12-31" value="{{broadcastDate}}"/>
+                            <input id="broadcastDate{{id}}" type="datetime-local" class="form-control" placeholder="2020-12-31" value="{{broadcastDate}}"/>
                         </div>
                         <div class="row">
                             <div class="input-group">
                                 <label class="col-md-4">출처</label>
-                                <a href="https://twitter.com/{{tweetAccount}}/status/{{source}}"
+                                <a href="{{source}}"
                                    class="btn btn-success active col-md-1" role="button">출처</a>
                                 <label class="col-md-3">작업 하실 거면 체크</label>
-                                <input class="form-control" type="checkbox" id="check" value="{{source}}"/>
-                                <input type="hidden" value="{{tweetAccount}}" id="account{{source}}" />
-                                <input type="hidden" value="{{id}}" id="id{{source}}" />
+                                <input class="form-control" type="checkbox" id="check" value="{{id}}"/>
+                                <input type="hidden" value="{{tweetAccount}}" id="account{{id}}" />
+                                <input type="hidden" value="{{source}}" id="url{{id}}" />
                             </div>
                         </div>
                     </form>
