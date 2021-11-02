@@ -107,7 +107,7 @@ var main = {
             alert('정제 된 정보가 등록 되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert('태그를 제외한 항목은 필수 항목입니다.');
         });
     },
 
@@ -143,7 +143,7 @@ var main = {
             alert('정제 된 정보가 수정 되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert('태그를 제외한 항목은 필수 항목입니다.');
         });
     },
 
