@@ -22,10 +22,11 @@ var main = {
         $('#btn-menu-info-check-delete').on('click', function() {
             _this.infoCheckDelete();
         }),
-
-
-        $('#btn-menuInfoRegister').on('click', function() {
-            _this.update();
+        $('#link-menuInfoManualRegister').on('click', function() {
+            _this.linkMenuInfoManualRegister();
+        }),
+        $('#btn-menu-manual-register').on('click', function() {
+            _this.manualRegister();
         });
     },
 
@@ -35,6 +36,10 @@ var main = {
 
     linkMenuInfoCheck : function () {
         location.href = '/menuInfoCheck';
+    },
+
+    linkMenuInfoManualRegister : function () {
+        location.href = '/menuInfoManualRegister';
     },
 
     infoRegisterSave : function () {
@@ -168,8 +173,36 @@ var main = {
         });
     },
 
-    delete : function () {
+    manualRegister : function () {
+        var data = [];
 
+        let user = {
+            broadcastTitle : $('#broadcastTitle').val(),
+            broadcastContext : $('#broadcastContext').val(),
+            broadcastTag : $('#broadcastTag').val(),
+            broadcastDate : $('#broadcastDate').val(),
+            tweetAccount : $('#account').val(),
+            source : $('#url').val()
+        };
+        data.push(user);
+
+        if(data.length == 0) {
+           alert('선택 된 정보가 없습니다.');
+           return;
+        }
+
+        $.ajax({
+            type:'POST',
+            url:'/api/info/register',
+            dataType:'json',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function(data) {
+            alert('정제 된 정보가 수동 등록 되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert('태그를 제외한 항목은 필수 항목입니다.');
+        });
     }
 }
 

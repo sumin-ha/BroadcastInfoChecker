@@ -19,49 +19,41 @@
             </div>
         </div>
         <div class="col-md-8">
-            <h2>추출한 방송 정보 정제</h2>
+            <h2>방송 정보 수동 등록</h2>
             <br />
             <div class="row">
                 <div class="col-md-6">
-                    추출한 방송 정보를 등록.
+                    트위터로 올라오지 않는 방송 알림을 수동 등록
                 </div>
                 <div class="col-md-6">
-                    <button id="btn-menu-info-get-List" class="btn btn-primary">정보 등록</button>
+                    <button id="btn-menu-manual-register" class="btn btn-primary">정보 등록</button>
                 </div>
             </div>
             <hr />
             <div>
-            {{#posts}}
                 <form>
                     <div class="input-group">
                         <label class="col-md-4">방송명 (요약)</label>
-                        <input id="broadcastTitle{{source}}" type="text" class="form-control" placeholder="최대한 간단하게. ex)아쿠아 생방송"/>
+                        <input id="broadcastTitle" type="text" class="form-control" placeholder="최대한 간단하게. ex)아쿠아 생방송"/>
                     </div>
                     <div class="input-group">
                         <label class="col-md-4">방송 정보 내용</label>
-                        <textarea class="form-control" id="broadcastContext{{source}}">{{context}}</textarea>
+                        <textarea class="form-control" id="broadcastContext"></textarea>
                     </div>
                     <div class="input-group">
                         <label class="col-md-4">방송 정보 태그 (카테고리)</label>
-                        <input id="broadcastTag{{source}}" type="text" class="form-control" placeholder="3개까지 기억됩니다. 여러개일 경우 , 로 구분해주세요."/>
+                        <input id="broadcastTag" type="text" class="form-control" placeholder="3개까지 기억됩니다. 여러개일 경우 , 로 구분해주세요."/>
                     </div>
                     <div class="input-group">
                         <label class="col-md-4">방송 정보 일시</label>
-                        <input id="broadcastDate{{source}}" type="datetime-local" class="form-control" placeholder="2020-12-31"/>
+                        <input id="broadcastDate" type="datetime-local" class="form-control" placeholder="2020-12-31"/>
                     </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <label class="col-md-4">출처</label>
-                            <a href="https://twitter.com/{{tweetAccount}}/status/{{source}}"
-                               class="btn btn-success active col-md-1" role="button">출처</a>
-                            <label class="col-md-3">등록 하실거라면 체크</label>
-                            <input class="form-control" type="checkbox" id="check" value="{{source}}"/>
-                            <input type="hidden" value="{{tweetAccount}}" id="account{{source}}" />
-                        </div>
+                    <div class="input-group">
+                        <label class="col-md-4">출처</label>
+                        <input id="url" type="text" class="form-control" placeholder="출처의 URL"/>
                     </div>
                 </form>
                 <hr />
-            {{/posts}}
             </div>
         </div>
     </div>
