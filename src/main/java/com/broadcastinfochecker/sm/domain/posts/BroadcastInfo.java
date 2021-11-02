@@ -37,7 +37,7 @@ public class BroadcastInfo extends BaseTimeEntity {
     private LocalDateTime broadcastDate;
 
     // 트위터 계정명 (@로 시작하는 계정명)
-    @Column(nullable = false)
+    @Column
     private String tweetAccount;
 
     // 방송 정보 출처 (웹 주소)

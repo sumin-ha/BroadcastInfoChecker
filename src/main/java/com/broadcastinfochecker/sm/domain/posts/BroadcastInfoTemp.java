@@ -24,7 +24,7 @@ public class BroadcastInfoTemp {
     public String tweetAccount;
 
     // 추출 내용
-    @Column(nullable = false)
+    @Column(length = 300, nullable = false)
     public String context;
 
     // 출처 (해당 트윗의 번호)
