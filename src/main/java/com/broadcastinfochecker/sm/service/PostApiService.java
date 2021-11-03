@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class PostApiService {
 
-    private final TwitterLoadingService twitterLoadingService;
+    private final TwitterService twitterLoadingService;
     private final BroadcastInfoRepository broadcastInfoRepository;
     private final TweetInfoRegisterRepository infoRegisterRepository;
 

@@ -1,13 +1,10 @@
 package com.broadcastinfochecker.sm.web;
 
 import com.broadcastinfochecker.sm.service.ListLoadService;
-import com.broadcastinfochecker.sm.service.TwitterLoadingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 /**
  * 화면 컨트롤러
@@ -16,8 +13,8 @@ import java.util.List;
 @Controller
 public class IndexController {
 
+    // 목록 화면 불러오기 용 서비스
     private final ListLoadService listLoadService;
-    private final TwitterLoadingService twitterLoadingService;
 
     // 접속 메인 페이지
     @GetMapping("/")

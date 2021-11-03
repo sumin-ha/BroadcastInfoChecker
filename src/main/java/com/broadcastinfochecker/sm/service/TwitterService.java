@@ -15,9 +15,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 트위터 관련 된 처리를 담당하는 서비스
+ */
 @RequiredArgsConstructor
 @Service
-public class TwitterLoadingService {
+public class TwitterService {
 
     // 트위터 등록정보를 취득 할 수 있는 서비스
     private final TwitterClientObjectService twitterClientObjectService = TwitterClientObjectService.getInstance();
@@ -79,30 +82,7 @@ public class TwitterLoadingService {
     }
 
 
-
-
-    public void TestTwitterLoading() {
-        LocalDateTime endLocalDateTime = LocalDateTime.now();
-        LocalDateTime startLocalDateTime = endLocalDateTime.minusDays(7);
-        // 파라메터 설정
-        AdditionalParameters additionalParameters = AdditionalParameters.builder()
-                .startTime(startLocalDateTime)
-                .endTime(endLocalDateTime)
-                .build();
-
-        UserV2 userV2 = twitterClient.getUserFromUserName("lovelive_staff");
-        System.out.println("아이디 로딩 체크");
-        System.out.println("아이디 : " + userV2.getId());
-
-        TweetList tweetList =
-        twitterClient.getUserTimeline(userV2.getId(), additionalParameters);
-        //getUserFromUserName
-        System.out.println("트윗 로딩 체크");
-        System.out.println("가져온 트윗 수 : " + tweetList.getData().size());
-        for(TweetV2.TweetData tweet : tweetList.getData()) {
-            System.out.println("Id : " + tweet.getId());
-            System.out.println("text : " + tweet.getText());
-            System.out.println("==============================");
-        }
+    public void TestTwitterPost() {
+        twitterClient.postTweet("테스트 트윗 テストツイッター");
     }
 }
