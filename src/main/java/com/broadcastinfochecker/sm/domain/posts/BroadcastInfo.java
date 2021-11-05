@@ -25,7 +25,7 @@ public class BroadcastInfo extends BaseTimeEntity {
     private String title;
 
     // 방송 정보 내용
-    @Column(nullable = false)
+    @Column(length = 300, nullable = false)
     private String context;
 
     // 방송 정보 태그 (카테고리)

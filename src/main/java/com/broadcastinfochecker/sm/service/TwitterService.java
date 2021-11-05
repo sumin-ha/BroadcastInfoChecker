@@ -81,8 +81,8 @@ public class TwitterService {
         broadcastInfoTempRepository.saveAll(broadcastInfoTempList);
     }
 
-
-    public void TestTwitterPost() {
-        twitterClient.postTweet("테스트 트윗 テストツイッター");
+    // 트위터에 텍스트를 포스트
+    public void twitterPost(String str) {
+        twitterClient.postTweet(str);
     }
 }

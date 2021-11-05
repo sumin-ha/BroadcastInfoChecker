@@ -4,6 +4,7 @@ import com.broadcastinfochecker.sm.domain.posts.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,5 +31,10 @@ public class ListLoadService {
     // 정제 된 방송 정보를 전부 불러오는 메서드
     public List<BroadcastInfo> getInfoList() {
         return broadcastInfoRepository.findAll();
+    }
+
+    // 정제 된 방송 정보를 전부 불러오는 메서드
+    public List<BroadcastInfo> getNext3DaysInfoList(LocalDateTime startDate, LocalDateTime endDate) {
+        return broadcastInfoRepository.findNext3DaysAsc(startDate, endDate);
     }
 }
