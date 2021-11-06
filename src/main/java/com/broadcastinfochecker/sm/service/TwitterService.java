@@ -8,7 +8,9 @@ import io.github.redouane59.twitter.dto.endpoints.AdditionalParameters;
 import io.github.redouane59.twitter.dto.tweet.TweetList;
 import io.github.redouane59.twitter.dto.tweet.TweetV2;
 import io.github.redouane59.twitter.dto.user.UserV2;
+import io.github.redouane59.twitter.signature.TwitterCredentials;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,17 +24,20 @@ import java.util.List;
 @Service
 public class TwitterService {
 
-    // 트위터 등록정보를 취득 할 수 있는 서비스
-    private final TwitterClientObjectService twitterClientObjectService = TwitterClientObjectService.getInstance();
-    // 트위터 등록정보
-    private TwitterClient twitterClient = twitterClientObjectService.getTwitterClient();
+    @Value("${twitter.apiKey}")
+    private String apiKey;
+    @Value("${twitter.apiSecretKey}")
+    private String apiSecretKey;
+    @Value("${twitter.accessToken}")
+    private String accessToken;
+    @Value("${twitter.accessTokenSecret}")
+    private String accessTokenSecret;
 
     private final BroadcastInfoTempRepository broadcastInfoTempRepository;
 
-
-
     // 등록 된 계정 정보를 이용, 트위터 데이터 추출하는 메서드
     public void infoGetList(List<TweetInfoRegister> infoRegisterDtoList) {
+        TwitterClient twitterClient = getTwitterClient(accessToken, accessTokenSecret, apiKey, apiSecretKey);
 
         // 현재 시간을 기준으로 7일 전 트윗을 불러오게 함.
         // 파라메터 클래스 설정.
@@ -83,6 +88,18 @@ public class TwitterService {
 
     // 트위터에 텍스트를 포스트
     public void twitterPost(String str) {
+        TwitterClient twitterClient = getTwitterClient(accessToken, accessTokenSecret, apiKey, apiSecretKey);
         twitterClient.postTweet(str);
+    }
+
+    // 트위터 api 획득
+    public TwitterClient getTwitterClient(String accessToken, String accessTokenSecret,
+                                          String apiKey, String apiSecretKey) {
+        return new TwitterClient(TwitterCredentials.builder()
+                .accessToken(accessToken)
+                .accessTokenSecret(accessTokenSecret)
+                .apiKey(apiKey)
+                .apiSecretKey(apiSecretKey)
+                .build());
     }
 }
