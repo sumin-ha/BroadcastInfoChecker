@@ -111,3 +111,9 @@ Travis -> S3 -> AWS CodeDeploy (.jar의 흐름)
 
 twitter 계정의 System.getProperty() 설정 필요
 https://javabydeveloper.com/gradle-system-properties-via-command-line-step-by-step-example/
+
+
+EC2 서버 셋업의 흐름
+-> ec2 인스턴스 시작 (.pem 발급)
+-> 탄력적 ip생성 및 인스턴스에 연결
+-> putty에 설정 후, 터미널 연결
