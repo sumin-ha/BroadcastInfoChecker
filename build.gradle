@@ -34,17 +34,22 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     implementation 'io.github.redouane59.twitter:twittered:2.2'
-    testImplementation(platform("org.junit:junit-bom:5.8.1"))
-    // Only needed to run tests in a version of IntelliJ IDEA that bundles older versions
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+
+    // junit5 적용은 보류
+    //    testImplementation(platform("org.junit:junit-bom:5.8.1"))
+//    // Only needed to run tests in a version of IntelliJ IDEA that bundles older versions
+//    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+//    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 }
 
 test {
