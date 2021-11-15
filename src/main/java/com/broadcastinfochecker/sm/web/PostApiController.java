@@ -28,8 +28,7 @@ public class PostApiController {
     // 등록한 계정&키워드를 가지고 트위터 api와 연동, 원하는 정보를 습득하는 api
     @PostMapping("/api/get/info")
     public Long menuInfoGetList() {
-        postApiService.infoGetList();
-        return 0L;
+        return postApiService.infoGetList();
     }
 
     // 정제 된 정보를 등록하는 api

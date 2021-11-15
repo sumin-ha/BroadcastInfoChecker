@@ -53,12 +53,12 @@ public class PostApiService {
 
     // 등록 된 계정 정보를 이용, 트위터 데이터 추출하는 메서드
     @Transactional
-    public void infoGetList() {
+    public Long infoGetList() {
         // 등록 된 계정 정보를 불러옴.
         List<TweetInfoRegister> infoRegisterDtoList =
                 infoRegisterRepository.findAll();
         // 추출 작업 시작
-        twitterLoadingService.infoGetList(infoRegisterDtoList);
+        return twitterLoadingService.infoGetList(infoRegisterDtoList);
     }
 
     // 정제한 방송 정보를 DB에 등록

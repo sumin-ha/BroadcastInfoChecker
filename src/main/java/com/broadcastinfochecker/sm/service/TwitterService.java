@@ -36,7 +36,7 @@ public class TwitterService {
     private final BroadcastInfoTempRepository broadcastInfoTempRepository;
 
     // 등록 된 계정 정보를 이용, 트위터 데이터 추출하는 메서드
-    public void infoGetList(List<TweetInfoRegister> infoRegisterDtoList) {
+    public Long infoGetList(List<TweetInfoRegister> infoRegisterDtoList) {
         TwitterClient twitterClient = getTwitterClient(accessToken, accessTokenSecret, apiKey, apiSecretKey);
 
         // 현재 시간을 기준으로 7일 전 트윗을 불러오게 함.
@@ -80,10 +80,18 @@ public class TwitterService {
                 }
             }
         }
+        // 획득한 트윗 수 체크
+        if(broadcastInfoTempList.size() == 0) {
+            // 0건 획득일 경우, 더이상 처리를 하지 않고 반환함
+            return 0L;
+        }
+
         // 이미 존재하던 임시 추출 데이터를 삭제
         broadcastInfoTempRepository.deleteAll();
         // 정제된 임시 추출 데이터 리스트를 DB에 저장
         broadcastInfoTempRepository.saveAll(broadcastInfoTempList);
+
+        return 1L;
     }
 
     // 트위터에 텍스트를 포스트
