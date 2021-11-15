@@ -8,6 +8,6 @@ class SmApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
 
+	}
 }
