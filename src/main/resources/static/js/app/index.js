@@ -56,7 +56,7 @@ var main = {
             data: JSON.stringify(data)
         }).done(function(data) {
             alert('정보가 등록되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/menuInfoRegister';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
@@ -69,6 +69,10 @@ var main = {
             dataType:'json',
             contentType:'application/json; charset=utf-8'
         }).done(function(data) {
+            if(data == 0) {
+                alert('해당되는 정보가 존재하지 않습니다.');
+                return 0;
+            }
             alert('정보가 추출되었습니다.');
             window.location.href = '/menuInfoGetList';
         }).fail(function (error) {
