@@ -1,0 +1,12 @@
+.MainAreaCenterPosition {
+    justify-content:center;
+}
+
+.MainArea {
+    width:700px;
+}
+
+.MainAreaFont {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+}

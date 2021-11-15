@@ -2,8 +2,8 @@
 
 {{>layout/sidebar}}
 
-        <div class="col-md-8">
-            <h2>정제한 방송 정보 확인 및 작업</h2>
+        <div class="MainArea MainAreaFont">
+            <label class="MenuTitle-W">정제한 방송 정보 확인 및 작업</label>
             <br />
             <div class="row">
                 <div class="col-md-6">
@@ -36,15 +36,13 @@
                             <label class="col-md-4">방송 정보 일시</label>
                             <input id="broadcastDate{{id}}" type="datetime-local" class="form-control" placeholder="2020-12-31" value="{{broadcastDate}}"/>
                         </div>
-                        <div class="row">
-                            <div class="input-group">
-                                <label class="col-md-4">출처</label>
-                                <a href="{{source}}" target="_blank"
-                                   class="btn btn-success active col-md-1" role="button">출처</a>
-                                <label class="col-md-3">작업 하실 거면 체크</label>
-                                <input class="form-control" type="checkbox" id="check" value="{{id}}"/>
-                                <input type="hidden" value="{{source}}" id="url{{id}}" />
-                            </div>
+                        <div class="input-group">
+                            <label class="col-md-4">출처</label>
+                            <a href="{{source}}" target="_blank"
+                               class="btn btn-success active col-md-1" role="button">출처</a>
+                            <label class="col-md-3">작업 하실 거면 체크</label>
+                            <input class="form-control" type="checkbox" id="check" value="{{id}}"/>
+                            <input type="hidden" value="{{source}}" id="url{{id}}" />
                         </div>
                     </form>
                     <hr />

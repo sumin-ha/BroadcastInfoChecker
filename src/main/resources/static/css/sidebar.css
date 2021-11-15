@@ -1,0 +1,29 @@
+
+.MenuTitle-W {
+    margin-top:50px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 25px;
+}
+
+.MenuBox-W {
+    padding:15px;
+    width:200px;
+}
+
+.MenuButton-W {
+    background-color:#FFF;
+    padding: 10px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+}
+
+.MenuButton-W:hover {
+    background-color:#F2F2F2;
+}
+
+.SideBarArea {
+    width:300px;
+    margin-left:2%;
+    margin-right:2%;
+}
