@@ -19,12 +19,6 @@ public class IndexController {
     // 접속 메인 페이지
     @GetMapping("/")
     public String index() {
-        // 화면에 돌려주는 모델에 리스트 데이터를 담음
-//        model.addAttribute("posts", postsService.findAllDesc());
-//        if(user != null) {
-//            model.addAttribute("userName", user.getName());
-//        }
-        // 리턴값은 띄울 화면의 파일명 (확장자 제외)
         return "index";
     }
 
