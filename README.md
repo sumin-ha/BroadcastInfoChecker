@@ -10,6 +10,7 @@
 - Build : Gradle
 - DB : PostgreSQL(AWS RDS)
 - Server : AWS EC2
+- 연결 된 트위터 : https://twitter.com/_namahousouinfo
 -----------------------------------------------------------
 
 21.11.17 1차 개발 완료<br />
