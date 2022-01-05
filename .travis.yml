@@ -1,0 +1,52 @@
+language: java
+jdk:
+  - openjdk11
+branches:
+  only:
+    - master
+
+# Travis CI 서버의 Home
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+script: "./gradlew clean build"
+
+# CI 실행 완료 시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - AristiaHope@gmail.com
+
+before_install:
+  - chmod +x gradlew
+
+before_deploy:
+  - mkdir -p before-deploy/ #zip를 만들 재료들을 담을 폴더 생성
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/ #zip 내용물 처리
+  - cd before-deploy && zip -r before-deploy *  # zip 만들기
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/before-deploy.zip deploy/testSpring.zip # 실제 배포 될 위치로 이동 (이름 변경)
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: test-springboot-build-1016 # 생성한 s3버킷
+    region: ap-northeast-1
+    skip_cleanup: true
+    acl: private #zip 접근은 private
+    local_dir: deploy
+    wait-until-deployed: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: test-springboot-build-1016 # 생성한 s3버킷
+    key: testSpring.zip #압축 전달할 빌드파일
+    bundle_type: zip
+    application: test-springboot-codedeploy #aws codedeploy에서 만든 앱 이름
+    depolyment_group: test-springboot-group #aws codedeploy에서 만든 앱 내부 그룹명
+    region: ap-northeast-1
+    wait-until-deployed: true
