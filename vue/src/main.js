@@ -6,6 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import routes from './routes'
 import { createStore } from 'vuex'
 import store from './store'
+import axios from 'axios'
 
 // vue-router
 const router = createRouter({
@@ -16,5 +17,7 @@ const router = createRouter({
 // vuex
 const storage = createStore(store)
 
-createApp(App).use(Quasar, quasarUserOptions)
+const app = createApp(App);
+app.config.globalProperties.axios = axios;
+app.use(Quasar, quasarUserOptions)
     .use(router).use(storage).mount('#app')

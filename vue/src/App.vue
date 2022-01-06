@@ -42,25 +42,25 @@ const linksList = [
     title: '알리미 추가 및 수정',
     caption: '추출 할 계정 정보 등록',
     icon: 'fas fa-info-circle',
-    link: ''
+    link: '1'
   },
   {
     title: '생방송 정보 취득',
     caption: '등록한 계정 정보 기준 트위터 탐색',
     icon: 'fab fa-twitter-square',
-    link: ''
+    link: '2'
   },
   {
     title: '등록 내용 확인',
     caption: '등록한 방송 정보를 확인, 수정, 삭제',
     icon: 'fas fa-book-reader',
-    link: ''
+    link: '3'
   },
   {
     title: '정보 수동 등록',
     caption: '다른 곳에서 공지 된 정보 등록',
     icon: 'fas fa-hand-paper',
-    link: ''
+    link: '4'
   }
 ];
 
