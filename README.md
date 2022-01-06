@@ -27,12 +27,12 @@ quasar를 사용했으며, 모바일 대응도 완료되었습니다.<br />
 메인화면
 각 메뉴로 이동 할 수 있는 화면
 ``` 
-<img src="/document/img/메인화면.png"></img>
+<img src="/document/img/메인화면_220106.png"></img>
 
 ```
 수집할 트위터 명과 키워드를 저장, 확인, 수정 가능한 페이지
 ```
-<img src="/document/img/알리미 추가 및 수정.png"></img>
+<img src="/document/img/알리미 추가 및 수정_220106.png"></img>
 
 ```
 등록한 정보를 이용해 트위터에서 원하는 트윗 수집하는 페이지
@@ -48,14 +48,13 @@ quasar를 사용했으며, 모바일 대응도 완료되었습니다.<br />
 출처 : 해당 정보의 출처
        이 페이지에서는 수집한 트위터의 주소가 자동으로 등록
 ```
-<img src="/document/img/방송 정보 취득 전.png"></img>   
-<img src="/document/img/방송 정보 취득.png"></img>
+<img src="/document/img/방송 정보 취득_220106.png"></img>
 
 ```
 등록한 정보를 확인하고, 수정 및 삭제가 가능한 페이지
 출처는 수정 불가능하며, 그 외의 부분은 전부 수정가능.
 ``` 
-<img src="/document/img/등록 내용 확인.png"></img>
+<img src="/document/img/등록 내용 확인_220106.png"></img>
 
 ```
 정보 수동 등록
@@ -71,7 +70,7 @@ quasar를 사용했으며, 모바일 대응도 완료되었습니다.<br />
 방송 정보 일시 : 해당 방송 시작 일시
 출처 : 해당 정보의 출처
 ```
-<img src="/document/img/정보 수동 등록.png"></img>
+<img src="/document/img/정보 수동 등록_220106.png"></img>
 
 
 ***
