@@ -39,6 +39,12 @@ import { mapGetters } from 'vuex'
 
 const linksList = [
   {
+    title: '메인',
+    caption: '메인 화면 이동',
+    icon: 'fas fa-home',
+    link: 'main'
+  },
+  {
     title: '알리미 추가 및 수정',
     caption: '추출 할 계정 정보 등록',
     icon: 'fas fa-info-circle',

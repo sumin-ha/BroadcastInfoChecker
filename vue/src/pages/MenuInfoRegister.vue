@@ -33,57 +33,31 @@
     </div>
     <div class="q-mt-md">
       Selected: {{ JSON.stringify(selected) }}
+      checklist : {{ rows }}
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 const columns = [
   {
-    name: 'account',
+    name: 'twitterAccount',
     required: true,
     label: '계정명',
     align: 'left',
-    field: row => row.account,
+    field: row => row.twitterAccount,
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'keyword',
+  { name: 'searchKeyword',
     label: '검색 키워드',
     align: 'left',
-    field: row => row.keyword,
-    sortable: false }
-]
-
-// 더미 데이터
-const rows = [
-  {
-    id: 1,
-    account: 'LoveLive_Staff',
-    keyword: '러브라이브'
-  },
-  {
-    id: 2,
-    account: 'SayuriDate',
-    keyword: '다테사유리, 슈퍼스타'
-  },
-  {
-    id: 3,
-    account: 'Shuka_Saito',
-    keyword: '사이토 슈카, 선샤인'
-  },
-  {
-    id: 4,
-    account: 'AoyamaNagisa',
-    keyword: '나기사, 아오야마나기사, 슈퍼스타'
-  },
-  {
-    id: 5,
-    account: 'Rikako_Aida',
-    keyword: '아이다상, 리캬코, 선샤인'
-  },
+    field: row => row.searchKeyword,
+    sortable: false 
+  }
 ]
 
 export default {
@@ -91,6 +65,9 @@ export default {
     const selected = ref([])
     const account = ref(null)
     const keyword = ref(null)
+
+    const store = useStore();
+    const rows = store.getters['getKeyWordList']
 
     return {
       account,

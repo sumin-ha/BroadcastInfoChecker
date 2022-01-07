@@ -13,6 +13,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+// import { commit } from 'vuex'
 
 export default defineComponent({
   name: 'EssentialLink',
@@ -38,8 +39,11 @@ export default defineComponent({
     }
   },
   methods: {
-      
+      doListSetup(list) {
+        // 리스트 셋업
+        this.$store.dispatch('setKeyWordList', list)
 
+      },
       // 메뉴 클릭시, 실행 옵션
       menuRouter() {        
         if(this.link == 1) {
@@ -48,8 +52,8 @@ export default defineComponent({
 
           this.axios.get("api/menuInfoRegister")
                       .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
+                        this.doListSetup(res.data);
+                        this.$router.push('/menuInfoRegister')
                       })
                       .catch((error) => {
                         console.log(error);
@@ -60,8 +64,10 @@ export default defineComponent({
           console.log(3);
         } else if(this.link == 4) {
           console.log(4);
+        } else if(this.link == 'main') {
+          this.$router.push('/')
         } else {
-          console.log('error')
+          console.log('error');
         }
       }
   }
