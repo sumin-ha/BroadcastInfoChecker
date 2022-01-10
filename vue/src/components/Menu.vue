@@ -39,19 +39,21 @@ export default defineComponent({
     }
   },
   methods: {
-
       // 메뉴 클릭시, 실행 옵션
       menuRouter() {        
         if(this.link == 1) {
           // 알리미 추가 및 수정 링크
-          console.log("알리미 추가 및 수정 링크");
+          console.log("검색 계정 및 키워드 관리");
           this.$router.push('/menuInfoRegister')
         } else if(this.link == 2) {
-          console.log(2);
+          console.log("생방송 정보 취득");
+          this.$router.push('/menuInfoGetLiveList')
         } else if(this.link == 3) {
-          console.log(3);
+          console.log("등록 내용 확인");
+          this.$router.push('/menuInfoLiveListCheck')
         } else if(this.link == 4) {
-          console.log(4);
+          console.log("정보 수동 등록");
+          this.$router.push('/menuInfoManualRegister')
         } else if(this.link == 'main') {
           this.$router.push('/')
         } else {

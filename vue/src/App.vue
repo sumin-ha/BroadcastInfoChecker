@@ -45,8 +45,8 @@ const linksList = [
     link: 'main'
   },
   {
-    title: '알리미 추가 및 수정',
-    caption: '추출 할 계정 정보 등록',
+    title: '검색 계정 및 키워드 관리',
+    caption: '추출 할 트위터 계정 정보 등록',
     icon: 'fas fa-info-circle',
     link: '1'
   },
