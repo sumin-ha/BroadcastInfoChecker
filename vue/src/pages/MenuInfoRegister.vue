@@ -29,11 +29,7 @@
         selection="multiple"
         v-model:selected="selected">
       </q-table>
-      <q-btn class="q-mt-sm q-ml-sm" label="선택 삭제" type="submit" color="deep-orange" glossy></q-btn>
-    </div>
-    <div class="q-mt-md">
-      Selected: {{ JSON.stringify(selected) }}
-      checklist : {{ rows }}
+      <q-btn class="q-mt-sm q-ml-sm" @click="removeKeywords" label="선택 삭제" type="submit" color="deep-orange" glossy></q-btn>
     </div>
   </div>
 </template>
@@ -52,7 +48,8 @@ const columns = [
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'searchKeyword',
+  { 
+    name: 'searchKeyword',
     label: '검색 키워드',
     align: 'left',
     field: row => row.searchKeyword,
@@ -62,11 +59,24 @@ const columns = [
 
 export default {
   methods: {
-    saveKeyword(list) {
+    saveKeyword() {
+      const list = {
+        twitterAccount : this.account,
+        searchKeyword : this.keyword
+      }
+      if(this.account == undefined || this.keyword == undefined) {
+        alert('항목을 전부 입력하세요.')
+        return;
+      }
       this.$store.dispatch('saveKeyWordList', list)
     },
-    removeKeywords(list) {
-      this.$store.dispatch('removeKeyWordList', list)
+    removeKeywords() {
+      const list = JSON.stringify(this.selected);
+      if(list == '[]') {
+        alert('삭제할 항목을 선택하세요.')
+        return;
+      }
+      this.$store.dispatch('removeKeyWordList', JSON.stringify(this.selected))
     }
   },
   setup () {

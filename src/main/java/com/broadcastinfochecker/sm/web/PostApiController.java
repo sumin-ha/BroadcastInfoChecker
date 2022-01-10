@@ -6,9 +6,11 @@ import com.broadcastinfochecker.sm.web.dto.InfoRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * post api 요청을 수신하는 컨트롤러
@@ -23,6 +25,12 @@ public class PostApiController {
     @PostMapping("api/account/register")
     public Long menuInfoRegister(@RequestBody InfoRegisterDto requestDto) {
         return postApiService.infoRegisterSave(requestDto);
+    }
+
+    // 트위터 계정 & 키워드 삭제용
+    @PostMapping("api/account/remove")
+    public void menuInfoRemove(@RequestBody List<InfoRegisterDto> requestDtoList) {
+        postApiService.infoRegisterDelete(requestDtoList);
     }
 
     // 등록한 계정&키워드를 가지고 트위터 api와 연동, 원하는 정보를 습득하는 api

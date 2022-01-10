@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InfoRegisterDto {
 
+    // 고유번호
+    private String id;
+
     // 트위터 계정명 (@뒤의 영문자)
     private String twitterAccount;
 
@@ -19,16 +22,16 @@ public class InfoRegisterDto {
     // [,]를 기준으로 여러 키워드를 등록가능
     // 최대 갯수를 지정할 필요가 있을 듯 함.
     // ,를 split하지 않고, 그대로 DB에 삽입함
-    private String keyword;
+    private String searchKeyword;
 
     // DB에 들어갈 Entity를 생성한다.
     public TweetInfoRegister toEntity() {
-        return TweetInfoRegister.builder().twitterAccount(twitterAccount).searchKeyword(keyword).build();
+        return TweetInfoRegister.builder().twitterAccount(twitterAccount).searchKeyword(searchKeyword).build();
     }
 
     @Builder
-    public InfoRegisterDto(String twitterAccount, String keyword) {
+    public InfoRegisterDto(String twitterAccount, String searchKeyword) {
         this.twitterAccount = twitterAccount;
-        this.keyword = keyword;
+        this.searchKeyword = searchKeyword;
     }
 }

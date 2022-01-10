@@ -33,7 +33,7 @@ public class PostApiService {
             // 이미 등록 된 계정 정보라면 해당 정보를 삭제함.
             if(dto.getTwitterAccount().equals(requestDto.getTwitterAccount())) {
                 infoRegisterRepository.delete(dto);
-                if(requestDto.getKeyword().isEmpty()) {
+                if(requestDto.getSearchKeyword().isEmpty()) {
                     return 0L;
                 }
             }
@@ -44,11 +44,24 @@ public class PostApiService {
 
     // 추출 정보 삭제
     @Transactional
-    public void infoRegisterDelete(Long id) {
-        TweetInfoRegister infoRegister = infoRegisterRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+    public void infoRegisterDelete(List<InfoRegisterDto> list) {
+        List<TweetInfoRegister> infoRegisterDtoList =
+                infoRegisterRepository.findAll();
 
-        infoRegisterRepository.delete(infoRegister);
+        List<TweetInfoRegister> removeTargetList = new ArrayList<>();
+
+        // 삭제 할 대상 확인
+        for(TweetInfoRegister dto : infoRegisterDtoList) {
+            for(InfoRegisterDto requestDto : list) {
+                if(dto.getTwitterAccount().equals(requestDto.getTwitterAccount())) {
+                    removeTargetList.add(dto);
+
+                    TweetInfoRegister infoRegister = infoRegisterRepository.findById(dto.getId())
+                            .orElseThrow(() -> new IllegalArgumentException("해당 정보가 존재하지 않습니다. account=" + dto.getTwitterAccount()));
+                }
+            }
+        }
+        infoRegisterRepository.deleteAll(removeTargetList);
     }
 
     // 등록 된 계정 정보를 이용, 트위터 데이터 추출하는 메서드
