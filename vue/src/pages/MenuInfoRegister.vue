@@ -14,7 +14,7 @@
                 hint="구분은 쉼표(,) 3개까지 허용"
                 style="width:300px" />
             <div class="q-pt-md">
-                <q-btn label="등록" type="submit" color="primary"></q-btn>
+                <q-btn @click="saveKeyword" label="등록" type="submit" color="primary"></q-btn>
                 <q-btn label="지우기" type="reset" color="primary" flat class="q-ml-sm"></q-btn>
             </div>
         </q-form>
@@ -61,6 +61,14 @@ const columns = [
 ]
 
 export default {
+  methods: {
+    saveKeyword(list) {
+      this.$store.dispatch('saveKeyWordList', list)
+    },
+    removeKeywords(list) {
+      this.$store.dispatch('removeKeyWordList', list)
+    }
+  },
   setup () {
     const selected = ref([])
     const account = ref(null)

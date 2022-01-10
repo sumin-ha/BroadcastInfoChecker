@@ -39,25 +39,13 @@ export default defineComponent({
     }
   },
   methods: {
-      doListSetup(list) {
-        // 리스트 셋업
-        this.$store.dispatch('setKeyWordList', list)
 
-      },
       // 메뉴 클릭시, 실행 옵션
       menuRouter() {        
         if(this.link == 1) {
           // 알리미 추가 및 수정 링크
           console.log("알리미 추가 및 수정 링크");
-
-          this.axios.get("api/menuInfoRegister")
-                      .then((res) => {
-                        this.doListSetup(res.data);
-                        this.$router.push('/menuInfoRegister')
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
+          this.$router.push('/menuInfoRegister')
         } else if(this.link == 2) {
           console.log(2);
         } else if(this.link == 3) {
