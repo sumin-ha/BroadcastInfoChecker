@@ -47,7 +47,15 @@ export default defineComponent({
           this.$router.push('/menuInfoRegister')
         } else if(this.link == 2) {
           console.log("생방송 정보 취득");
-          this.$router.push('/menuInfoGetLiveList')
+          // 트위터에서 정보 습득
+          this.axios.post("api/get/info")
+                      .then(() => {
+                        console.log("ok");
+                        this.$router.push('/menuInfoGetLiveList')
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });          
         } else if(this.link == 3) {
           console.log("등록 내용 확인");
           this.$router.push('/menuInfoLiveListCheck')

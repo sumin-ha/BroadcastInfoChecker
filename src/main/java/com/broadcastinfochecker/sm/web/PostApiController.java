@@ -41,8 +41,8 @@ public class PostApiController {
 
     // 정제 된 정보를 등록하는 api
     @PostMapping("/api/info/register")
-    public Long menuInfoGetListRegister(@RequestBody List<InfoGetListRegisterDto> requestDtoList) {
-        postApiService.infoGetListRegister(requestDtoList);
+    public Long menuInfoGetListRegister(@RequestBody InfoGetListRegisterDto requestDto) {
+        postApiService.infoGetListRegister(requestDto);
         return 0L;
     }
 

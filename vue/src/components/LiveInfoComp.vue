@@ -1,18 +1,27 @@
 <template>
-  <div class="q-pa-md">
+    <div class="q-pa-md" :id="indexNum">
         <div class="row">
             <div class="col-xs-12 col-sm-5">
             <q-input
                 v-model="title"
                 label="방송명 (요약)"
                 hint="최대한 간단하게. ex)아쿠아 생방송"
+                :rules="[val => !!val || '방송명 (요약)은 필수 항목입니다.']"
                 />
             </div>
             <div class="col-xs-12 col-sm-5">
             <q-input
-                v-model="context"
-                label="방송 정보 내용"
-                hint="@을 제외한 트위터 계정명"
+                v-if="buttonFlag==1"
+                v-model="bcSource"
+                label="출처"
+                hint="출처 트위터 링크"
+                readonly
+                />
+            <q-input
+                v-if="buttonFlag!=1"
+                v-model="bcSource"
+                label="출처"
+                hint="http://로 시작하는 주소"
                 />
             </div>
         </div>
@@ -27,7 +36,10 @@
             <div class="col-xs-12 col-sm-5">
             <div class="q-mt-md">
                 <q-item-label class="q-field__label">방송 정보 일시</q-item-label>
-                <q-input filled v-model="bcDate">
+                <q-input 
+                    filled
+                    v-model="bcDate"
+                    :rules="[val => !!val || '방송 일시는 필수 항목입니다.']">
                 <template v-slot:prepend>
                     <q-icon name="event" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -57,17 +69,17 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-5">
-            <q-input
-                v-model="bcSource"
-                label="출처"
-                hint="http://로 시작하는 주소"
+                <q-input
+                    autogrow
+                    v-model="context"
+                    label="방송 정보 내용"
                 />
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
-            <q-btn push color="secondary" label="정보 등록" />            
+            <q-btn push color="secondary" label="정보 등록" @click="submitLiveInfo" />            
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
-            <q-btn v-if="buttonFlag==1" push color="red" label="삭제" />
+            <q-btn v-if="buttonFlag==1" @click="removeTempInfo" push color="red" label="삭제" />
             <q-btn v-if="buttonFlag==2" push color="red" label="정보 삭제" />
             </div>
         </div>
@@ -76,15 +88,43 @@
 
 <script>
 export default {
-    props: ['dataOne', 'buttonFlag'],
+    props: ['dataOne', 'buttonFlag', 'index'],
     data () {
         return {
-        title: this.dataOne.broadcastTitle,
-        context: this.dataOne.broadcastContext,
-        tag: this.dataOne.broadcastTag,
-        bcDate: this.dataOne.broadcastDate,
-        bcSource: this.dataOne.source,
-        flag: this.buttonFlag,
+            id: this.dataOne.id,
+            title: this.dataOne.title,
+            context: this.dataOne.context,
+            tag: this.dataOne.tag,
+            tweetAccount: this.dataOne.tweetAccount,
+            bcDate: this.dataOne.broadcastDate,
+            bcSource: this.dataOne.source,
+            flag: this.buttonFlag,
+            indexNum: this.index,
+        }
+    },
+    methods: {
+        submitLiveInfo() {
+            const liveObj = {
+                id: this.id,
+                broadcastTitle:this.title,
+                broadcastContext:this.context,
+                broadcastTag:this.tag,
+                broadcastDate:this.bcDate,
+                tweetAccount:this.tweetAccount,
+                source:this.bcSource
+            }
+            console.log(liveObj);
+
+            if(this.title == undefined || this.bcDate == undefined) {
+                alert('항목을 전부 입력하세요.')
+                return;
+            }
+            this.$store.dispatch('saveLiveInfoList', liveObj);
+        },
+        removeTempInfo() {
+            console.log(document.getElementById(this.indexNum));
+            document.getElementById(this.indexNum).remove();
+            this.$store.dispatch('removeLiveTempList', this.indexNum);
         }
     }
 }

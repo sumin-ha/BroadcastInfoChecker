@@ -76,13 +76,8 @@ public class PostApiService {
 
     // 정제한 방송 정보를 DB에 등록
     @Transactional
-    public void infoGetListRegister(List<InfoGetListRegisterDto> requestDtoList) {
-        List<BroadcastInfo> broadcastInfoList = new ArrayList<>();
-        for(InfoGetListRegisterDto dto : requestDtoList) {
-            broadcastInfoList.add(dto.toEntity());
-        }
-        // 등록
-        broadcastInfoRepository.saveAll(broadcastInfoList);
+    public void infoGetListRegister(InfoGetListRegisterDto requestDto) {
+        broadcastInfoRepository.save(requestDto.toEntity());
     }
 
     // 정제한 방송 정보를 수정

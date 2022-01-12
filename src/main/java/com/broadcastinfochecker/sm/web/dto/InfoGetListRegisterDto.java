@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 추출 후 정제한 데이터를 담아두는 DTO
@@ -18,17 +19,22 @@ public class InfoGetListRegisterDto {
     private String broadcastTitle;
     private String broadcastContext;
     private String broadcastTag;
-    private LocalDateTime broadcastDate;
+    private String broadcastDate;
     private String tweetAccount;
     private String source;
 
     // DB에 들어갈 Entity를 생성한다.
     public BroadcastInfo toEntity() {
+
+        // String 형식의 Date를 LocalDateTime 형식으로
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime date = LocalDateTime.parse(broadcastDate, formatter);
+
         return BroadcastInfo.builder()
                 .title(broadcastTitle)
                 .context(broadcastContext)
                 .tag(broadcastTag)
-                .broadcastDate(broadcastDate)
+                .broadcastDate(date)
                 .source(source)
                 .tweetAccount(tweetAccount)
                 .build();
@@ -40,7 +46,7 @@ public class InfoGetListRegisterDto {
         this.broadcastTitle = broadcastTitle;
         this.broadcastContext = broadcastContext;
         this.broadcastTag = broadcastTag;
-        this.broadcastDate = broadcastDate;
+        this.broadcastDate = broadcastDate.toString();
         this.tweetAccount = tweetAccount;
         this.source = source;
     }

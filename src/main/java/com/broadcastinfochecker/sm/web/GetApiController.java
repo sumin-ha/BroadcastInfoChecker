@@ -21,4 +21,10 @@ public class GetApiController {
     public Object menuInfoRegister() {
         return listLoadService.getInfoRegisterList();
     }
+
+    // 방송 정보를 취득하고 구글 캘린더 등록, 트위터 알림용 등록을 위한 데이터 정제 화면 요청
+    @GetMapping("/api/menuInfoGetList")
+    public Object menuInfoGetList() {
+        return listLoadService.getInfoListTemp();
+    }
 }
