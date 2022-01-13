@@ -82,48 +82,39 @@ public class PostApiService {
 
     // 정제한 방송 정보를 수정
     @Transactional
-    public void infoCheckUpdate(List<InfoGetListRegisterDto> requestDtoList) {
-
-        List<BroadcastInfo> updateTargetList = new ArrayList<>();
-        List<BroadcastInfo> deleteTargetList = new ArrayList<>();
+    public void infoCheckUpdate(InfoGetListRegisterDto requestDto) {
         List<BroadcastInfo> broadcastInfoList =
                 broadcastInfoRepository.findAll();
 
         // 수정 대상 내용 삭제
+        BroadcastInfo deleteTarget = new BroadcastInfo();
         for(BroadcastInfo dto : broadcastInfoList) {
             // 이미 등록 된 방송 정보라면 해당 정보를 삭제함.
-            for(InfoGetListRegisterDto requestDto : requestDtoList) {
-                if(dto.getId().equals(Long.parseLong(requestDto.getId()))) {
-                    deleteTargetList.add(dto);
-                }
+            if(dto.getId().equals(Long.parseLong(requestDto.getId()))) {
+                deleteTarget = dto;
             }
         }
-        broadcastInfoRepository.deleteAll(deleteTargetList);
+        broadcastInfoRepository.delete(deleteTarget);
 
         // 수정 대상 내용 등록
-        for(InfoGetListRegisterDto dto : requestDtoList) {
-            updateTargetList.add(dto.toEntity());
-        }
-        // 등록
-        broadcastInfoRepository.saveAll(updateTargetList);
+        BroadcastInfo updateTarget = requestDto.toEntity();
+        broadcastInfoRepository.save(updateTarget);
     }
 
     // 정제한 방송 정보를 삭제
     @Transactional
-    public void infoCheckDelete(List<String> targetList) {
-        List<BroadcastInfo> deleteTargetList = new ArrayList<>();
+    public void infoCheckDelete(String target) {
+        BroadcastInfo deleteTarget = new BroadcastInfo();
         List<BroadcastInfo> broadcastInfoList =
                 broadcastInfoRepository.findAll();
 
         // 수정 대상 내용 삭제
         for(BroadcastInfo dto : broadcastInfoList) {
             // 이미 등록 된 방송 정보라면 해당 정보를 삭제함.
-            for(String id : targetList) {
-                if(dto.getId().equals(Long.parseLong(id))) {
-                    deleteTargetList.add(dto);
-                }
+            if(dto.getId().equals(Long.parseLong(target))) {
+                deleteTarget = dto;
             }
         }
-        broadcastInfoRepository.deleteAll(deleteTargetList);
+        broadcastInfoRepository.delete(deleteTarget);
     }
 }

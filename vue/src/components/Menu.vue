@@ -49,9 +49,13 @@ export default defineComponent({
           console.log("생방송 정보 취득");
           // 트위터에서 정보 습득
           this.axios.post("api/get/info")
-                      .then(() => {
-                        console.log("ok");
-                        this.$router.push('/menuInfoGetLiveList')
+                      .then((res) => {
+                        if(res.data == 0){
+                          alert('습득 내용이 존재하지 않습니다. 키워드를 확인해주세요.');
+                          return;
+                        } else {
+                          this.$router.push('/menuInfoGetLiveList')
+                        }                        
                       })
                       .catch((error) => {
                         console.log(error);

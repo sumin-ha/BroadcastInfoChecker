@@ -42,11 +42,29 @@ const menuInfoGetLiveList = {
     }
 }
 
+// 등록 내용 확인 취득 요청
+const menuInfoLiveListCheck = {
+    fetch() {
+        let arr = [];
+        axios.get("api/menuInfoCheck")
+            .then((res) => {
+                for(const i in res.data) {
+                    arr.push(res.data[i]);
+                }
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+        return arr;
+    }
+}
+
 
 const store = {
     state: {
         keyWordList: menuInfoRegisterList.fetch(),
         liveTempList: menuInfoGetLiveList.fetch(),
+        liveList: menuInfoLiveListCheck.fetch(),
     },
     getters: {
         getKeyWordList: (state) => {
@@ -54,6 +72,9 @@ const store = {
         },
         getLiveTempList: (state) => {
             return state.liveTempList
+        },
+        getLiveList: (state) => {
+            return state.liveList
         },
     },
     mutations: {
@@ -76,6 +97,38 @@ const store = {
         spliceLiveTempList: (state, index) => {
             console.log("delete temp list index : " + index);
             state.liveTempList.splice(index,1);
+        },
+        // 등록 내용 수정 저장
+        updateLiveList: (state, liveObj) => {
+            console.log("update : " + liveObj);
+            for(let i=0; i<state.liveList.length; i++) {
+                const k = state.liveList[i];
+                console.log(state.liveList);
+                console.log(k.id + " : " + liveObj.id);
+                if(k.id == liveObj.id) {
+                    state.liveList.splice(i,1);
+                }
+            }
+            state.liveList.push(liveObj);
+            console.log(liveObj);
+            console.log(state.liveList[0]);
+            console.log(state.liveList[1]);
+            console.log(state.liveList[2]);
+        },
+        // 등록 내용 삭제
+        spliceLiveList: (state, index) => {
+            console.log("delete list index : " + index);
+
+            for(let i=0; i<state.liveList.length; i++) {
+                const k = state.liveList[i];
+                console.log(k.id + " : " + index);
+                if(k.id == index) {
+                    console.log(k.id + " : " + index);
+                    console.log(i)
+                    state.liveList.splice(i,1);
+                }
+            }
+            // state.liveList.splice(index,1);
         },
     },
     actions: {
@@ -118,7 +171,35 @@ const store = {
         // 습득 후 필요 없는 정보 삭제(vuex리스트에서 삭제)
         removeLiveTempList: (context, index) => {
             context.commit('spliceLiveTempList', index)
-        }
+        },
+        // 등록 내용 수정
+        updateLiveInfoList: (context, liveObj) => {
+            axios.post("api/info/update", liveObj)
+            .then(() => {
+                console.log('ok');
+                context.commit('updateLiveList', liveObj)
+                alert('수정 완료.');                
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        },
+        // 등록 내용 삭제
+        removeLiveList: (context, id) => {
+
+            // 삭제 api 부르기
+            // axios.post("api/info/delete", id, axiosConfig)
+            // .then(() => {
+            //     console.log('ok');
+            //     context.commit('spliceLiveList', id)
+            //     alert('삭제 완료.');                
+            // })
+            // .catch((error) => {
+            //     console.log(error);
+            // });
+
+            context.commit('spliceLiveList', id)
+        },
     }
 }
 

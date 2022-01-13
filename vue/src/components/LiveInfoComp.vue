@@ -76,11 +76,12 @@
                 />
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
-            <q-btn push color="secondary" label="정보 등록" @click="submitLiveInfo" />            
+            <q-btn push v-if="buttonFlag==1" color="secondary" label="정보 등록" @click="submitLiveInfo" />
+            <q-btn push v-if="buttonFlag==2" color="secondary" label="정보 수정" @click="submitLiveInfo" />            
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
             <q-btn v-if="buttonFlag==1" @click="removeTempInfo" push color="red" label="삭제" />
-            <q-btn v-if="buttonFlag==2" push color="red" label="정보 삭제" />
+            <q-btn v-if="buttonFlag==2" @click="removeInfo" push color="red" label="정보 삭제" />
             </div>
         </div>
     </div>
@@ -119,12 +120,25 @@ export default {
                 alert('항목을 전부 입력하세요.')
                 return;
             }
-            this.$store.dispatch('saveLiveInfoList', liveObj);
+
+            if(this.flag == 1) {
+                this.$store.dispatch('saveLiveInfoList', liveObj);
+            } else if(this.flag == 2) {
+                this.$store.dispatch('updateLiveInfoList', liveObj);
+            } else {
+                alert('잘못 된 요청입니다.');
+            }
+            
         },
         removeTempInfo() {
             console.log(document.getElementById(this.indexNum));
             document.getElementById(this.indexNum).remove();
             this.$store.dispatch('removeLiveTempList', this.indexNum);
+        },
+        removeInfo() {
+            // console.log(document.getElementById(this.indexNum));
+            // document.getElementById(this.indexNum).remove();
+            this.$store.dispatch('removeLiveList', this.id);
         }
     }
 }

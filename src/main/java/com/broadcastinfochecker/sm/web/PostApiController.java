@@ -48,15 +48,15 @@ public class PostApiController {
 
     // 정제 된 정보를 수정하는 api
     @PostMapping("/api/info/update")
-    public Long menuInfoCheckUpdate(@RequestBody List<InfoGetListRegisterDto> requestDtoList) {
-        postApiService.infoCheckUpdate(requestDtoList);
+    public Long menuInfoCheckUpdate(@RequestBody InfoGetListRegisterDto requestDto) {
+        postApiService.infoCheckUpdate(requestDto);
         return 0L;
     }
 
     // 정제 된 정보를 삭제하는 api
     @PostMapping("/api/info/delete")
-    public Long menuInfoCheckDelete(@RequestBody List<String> targetList) {
-        postApiService.infoCheckDelete(targetList);
+    public Long menuInfoCheckDelete(@RequestBody String target) {
+        postApiService.infoCheckDelete(target);
         return 0L;
     }
 }
