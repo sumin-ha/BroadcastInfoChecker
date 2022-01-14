@@ -86,25 +86,20 @@ public class PostApiService {
         List<BroadcastInfo> broadcastInfoList =
                 broadcastInfoRepository.findAll();
 
-        // 수정 대상 내용 삭제
-        BroadcastInfo deleteTarget = new BroadcastInfo();
+        // 수정 대상 엔티티 탐색.
+        BroadcastInfo updateTarget = requestDto.toEntity();
         for(BroadcastInfo dto : broadcastInfoList) {
-            // 이미 등록 된 방송 정보라면 해당 정보를 삭제함.
             if(dto.getId().equals(Long.parseLong(requestDto.getId()))) {
-                deleteTarget = dto;
+                updateTarget.setUpdateDeleteId(dto.getId());
+                broadcastInfoRepository.save(updateTarget);
+                break;
             }
         }
-        broadcastInfoRepository.delete(deleteTarget);
-
-        // 수정 대상 내용 등록
-        BroadcastInfo updateTarget = requestDto.toEntity();
-        broadcastInfoRepository.save(updateTarget);
     }
 
     // 정제한 방송 정보를 삭제
     @Transactional
     public void infoCheckDelete(String target) {
-        BroadcastInfo deleteTarget = new BroadcastInfo();
         List<BroadcastInfo> broadcastInfoList =
                 broadcastInfoRepository.findAll();
 
@@ -112,9 +107,9 @@ public class PostApiService {
         for(BroadcastInfo dto : broadcastInfoList) {
             // 이미 등록 된 방송 정보라면 해당 정보를 삭제함.
             if(dto.getId().equals(Long.parseLong(target))) {
-                deleteTarget = dto;
+                broadcastInfoRepository.delete(dto);
+                break;
             }
         }
-        broadcastInfoRepository.delete(deleteTarget);
     }
 }

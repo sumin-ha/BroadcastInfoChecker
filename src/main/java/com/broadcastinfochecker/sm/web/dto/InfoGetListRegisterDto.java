@@ -16,24 +16,22 @@ import java.time.format.DateTimeFormatter;
 public class InfoGetListRegisterDto {
 
     private String id;
-    private String broadcastTitle;
-    private String broadcastContext;
-    private String broadcastTag;
+    private String title;
+    private String context;
+    private String tag;
     private String broadcastDate;
     private String tweetAccount;
     private String source;
 
     // DB에 들어갈 Entity를 생성한다.
     public BroadcastInfo toEntity() {
-
         // String 형식의 Date를 LocalDateTime 형식으로
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime date = LocalDateTime.parse(broadcastDate, formatter);
-
         return BroadcastInfo.builder()
-                .title(broadcastTitle)
-                .context(broadcastContext)
-                .tag(broadcastTag)
+                .title(title)
+                .context(context)
+                .tag(tag)
                 .broadcastDate(date)
                 .source(source)
                 .tweetAccount(tweetAccount)
@@ -43,9 +41,9 @@ public class InfoGetListRegisterDto {
     @Builder
     public InfoGetListRegisterDto(String id, String broadcastTitle, String broadcastContext, String broadcastTag, LocalDateTime broadcastDate, String tweetAccount, String source) {
         this.id = id;
-        this.broadcastTitle = broadcastTitle;
-        this.broadcastContext = broadcastContext;
-        this.broadcastTag = broadcastTag;
+        this.title = broadcastTitle;
+        this.context = broadcastContext;
+        this.tag = broadcastTag;
         this.broadcastDate = broadcastDate.toString();
         this.tweetAccount = tweetAccount;
         this.source = source;

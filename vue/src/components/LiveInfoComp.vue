@@ -107,14 +107,13 @@ export default {
         submitLiveInfo() {
             const liveObj = {
                 id: this.id,
-                broadcastTitle:this.title,
-                broadcastContext:this.context,
-                broadcastTag:this.tag,
+                title:this.title,
+                context:this.context,
+                tag:this.tag,
                 broadcastDate:this.bcDate,
                 tweetAccount:this.tweetAccount,
                 source:this.bcSource
             }
-            console.log(liveObj);
 
             if(this.title == undefined || this.bcDate == undefined) {
                 alert('항목을 전부 입력하세요.')
@@ -133,12 +132,13 @@ export default {
         removeTempInfo() {
             console.log(document.getElementById(this.indexNum));
             document.getElementById(this.indexNum).remove();
-            this.$store.dispatch('removeLiveTempList', this.indexNum);
+            this.$store.dispatch('removeLiveTempList');
         },
         removeInfo() {
-            // console.log(document.getElementById(this.indexNum));
-            // document.getElementById(this.indexNum).remove();
-            this.$store.dispatch('removeLiveList', this.id);
+            const obj = {
+                id : this.id,
+            }
+            this.$store.dispatch('removeLiveList', obj);
         }
     }
 }

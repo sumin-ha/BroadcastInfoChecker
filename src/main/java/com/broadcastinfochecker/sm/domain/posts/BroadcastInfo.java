@@ -53,4 +53,9 @@ public class BroadcastInfo extends BaseTimeEntity {
         this.source = source;
         this.tweetAccount = tweetAccount;
     }
+
+    // update, delete용 id 세팅
+    public void setUpdateDeleteId(Long id) {
+        this.id = id;
+    }
 }
