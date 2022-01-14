@@ -55,6 +55,11 @@ public class TwitterService {
             // 유저 id를 습득. (혹시나 유저네임에 @가 붙어있다면 떼어내줌)
             UserV2 userV2 = twitterClient.getUserFromUserName(source.getTwitterAccount().replace("@", ""));
 
+            // 유저가 없으면 다음 아이디를 탐색
+            if(userV2.getData() == null) {
+                continue;
+            }
+
             // 타임라인 습득
             TweetList tweetList =
                     twitterClient.getUserTimeline(userV2.getId(), additionalParameters);
@@ -71,7 +76,7 @@ public class TwitterService {
                        broadcastInfoTempList.add(BroadcastInfoTemp.builder()
                                .tweetAccount(source.getTwitterAccount())
                                .context(tweet.getText())
-                               .source(tweet.getId())
+                               .source("https://twitter.com/" + source.getTwitterAccount() +"/status/" + tweet.getId())
                                .build());
                        System.out.println("text line : " + tweet.getText().length());
                        System.out.println("text : " + tweet.getText());
