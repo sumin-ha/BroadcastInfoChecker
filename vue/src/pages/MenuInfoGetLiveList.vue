@@ -1,12 +1,15 @@
 <template>
-    <div
-      v-for="(data,index) in dataList"
-      :key="data.broadcastTitle">
-        <LiveInfoComp 
-            v-bind:dataOne="data" 
-            v-bind:buttonFlag="1"
-            v-bind:index="index" />
-    </div>
+    <transition-group name="listList" tag="div">
+        <span
+            v-for="(data,index) in dataList"
+            :key="data">
+                <LiveInfoComp 
+                    v-bind:dataOne="data" 
+                    v-bind:buttonFlag="1"
+                    v-bind:index="index" />
+        </span>
+    </transition-group>
+
 </template>
 
 <script>

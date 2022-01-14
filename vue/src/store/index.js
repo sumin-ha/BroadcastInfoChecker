@@ -93,21 +93,14 @@ const store = {
                 }
             }
         },
+        // 방송 정보 취득 (수동) 등록 -> 등록 내용 확인 리스트 삽입
+        saveLiveCheckList: (state, liveObj) => {
+            state.liveList.push(liveObj);
+        },
         // 방송 정보 취득 삭제
         spliceLiveTempList: (state, index) => {
             console.log("delete temp list index : " + index);
             state.liveTempList.splice(index,1);
-        },
-        // 등록 내용 수정 저장
-        updateLiveList: (state, liveObj) => {
-            console.log("update : " + liveObj);
-            for(let i=0; i<state.liveList.length; i++) {
-                const k = state.liveList[i];
-                if(k.id == liveObj.id) {
-                    state.liveList.splice(i,1);
-                }
-            }
-            state.liveList.push(liveObj);
         },
         // 등록 내용 삭제
         spliceLiveList: (state, id) => {
@@ -145,11 +138,12 @@ const store = {
             console.log(error);
             });
         },
-        // 습득 후 정제한 생방송 정보 등록(db 등록)
+        // 습득 후 정제한 생방송 정보 등록(+확인 리스트 추가)
         saveLiveInfoList: (context, liveObj) => {
             axios.post("api/info/register", liveObj)
             .then(() => {
                 console.log('ok');
+                context.commit('saveLiveCheckList', liveObj)
                 alert('등록 완료.');
             })
             .catch((error) => {
