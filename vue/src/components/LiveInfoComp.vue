@@ -22,6 +22,7 @@
                 v-model="bcSource"
                 label="출처"
                 hint="http://로 시작하는 주소"
+                :rules="[val => !!val || '출처는 필수 항목입니다.']"
                 />
             </div>
         </div>
@@ -115,7 +116,7 @@ export default {
                 source:this.bcSource
             }
 
-            if(this.title == undefined || this.bcDate == undefined) {
+            if(this.title == undefined || this.bcDate == undefined || this.bcSource == undefined) {
                 alert('항목을 전부 입력하세요.')
                 return;
             }
