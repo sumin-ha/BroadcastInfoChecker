@@ -1,5 +1,5 @@
 <template>
-    <LiveInfoComp v-bind:dataOne="data" v-bind:buttonFlag="0"/>
+    <LiveInfoComp v-bind:dataOne="data" v-bind:buttonFlag="3"/>
 </template>
 
 <script>

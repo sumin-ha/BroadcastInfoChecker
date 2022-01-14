@@ -78,7 +78,8 @@
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
             <q-btn push v-if="buttonFlag==1" color="secondary" label="정보 등록" @click="submitLiveInfo" />
-            <q-btn push v-if="buttonFlag==2" color="secondary" label="정보 수정" @click="submitLiveInfo" />            
+            <q-btn push v-if="buttonFlag==2" color="secondary" label="정보 수정" @click="submitLiveInfo" />
+            <q-btn push v-if="buttonFlag==3" color="secondary" label="정보 등록" @click="submitLiveInfo" />            
             </div>
             <div class="col-xs-3 col-sm-2 q-mt-lg">
             <q-btn v-if="buttonFlag==1" @click="removeTempInfo" push color="red" label="삭제" />
@@ -121,7 +122,7 @@ export default {
                 return;
             }
 
-            if(this.flag == 1) {
+            if(this.flag == 1 || this.flag == 3) {
                 this.$store.dispatch('saveLiveInfoList', liveObj);
             } else if(this.flag == 2) {
                 this.$store.dispatch('updateLiveInfoList', liveObj);
