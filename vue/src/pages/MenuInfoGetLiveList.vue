@@ -1,4 +1,7 @@
 <template>
+    <div class="q-pt-md q-pl-md">
+        <q-btn outline @click="reflashList" style="color: goldenrod;" label="새로 읽어오기" />
+    </div>
     <transition-group name="listList" tag="div">
         <span
             v-for="(data,index) in dataList"
@@ -19,6 +22,11 @@ import LiveInfoComp from '@/components/LiveInfoComp.vue'
 export default {
     components : {
         LiveInfoComp
+    },
+    methods: {
+        reflashList() {
+            this.$store.dispatch('twitterReaderReflash');
+        }
     },
     setup() {
         const store = useStore();

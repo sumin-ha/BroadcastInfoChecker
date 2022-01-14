@@ -111,6 +111,15 @@ const store = {
                 }
             }
         },
+        // 키워드 기반 습득내용 새로고침
+        liveTempListReflash: (state, list) => {
+            console.log("list :" + list)
+            state.liveTempList.splice(0,state.liveTempList.length);
+            for(const k in list) {
+                state.liveTempList.push(list[k]);
+            }
+            console.log("liveTempList :" + state.liveTempList)
+        }
     },
     actions: {
         // 검색 계정 및 키워드 저장
@@ -179,6 +188,36 @@ const store = {
                 console.log(error);
             });
         },
+        // 트위터 탐색 리스트 새로 불러오기
+        twitterReaderReflash: (context) => {
+            // 탐색 api 부르기
+            console.log("ttt");
+            let arr = [];
+
+            console.log("생방송 정보 취득");
+            // 트위터에서 정보 습득
+            axios.post("api/get/info")
+                        .then((res) => {
+                          if(res.data == 0){
+                            alert('습득 내용이 존재하지 않습니다. 키워드를 확인해주세요.');
+                            return;
+                          } else {
+                            axios.get("api/menuInfoGetList")
+                            .then((res) => {
+                                for(const i in res.data) {
+                                    arr.push(res.data[i]);
+                                }
+                                context.commit('liveTempListReflash', arr)
+                            })
+                            .catch((error) => {
+                            console.log(error);
+                            });
+                          }                        
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        }); 
+        }
     }
 }
 
