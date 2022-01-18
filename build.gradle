@@ -33,6 +33,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
 
+    implementation 'com.h2database:h2'
+
     implementation 'io.github.redouane59.twitter:twittered:2.2'
     testImplementation("org.junit.vintage:junit-vintage-engine") {
         exclude group: "org.hamcrest", module: "hamcrest-core"
