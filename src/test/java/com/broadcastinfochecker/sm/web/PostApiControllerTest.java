@@ -70,7 +70,7 @@ public class PostApiControllerTest {
         String keyword = "testKeyword";
         InfoRegisterDto requestDto = InfoRegisterDto.builder()
                 .twitterAccount(twitterAccount)
-                .keyword(keyword)
+                .searchKeyword(keyword)
                 .build();
 
         String url = "http://localhost:" + port + "/api/account/register";
@@ -95,7 +95,7 @@ public class PostApiControllerTest {
         String keyword = "testKeyword2";
         InfoRegisterDto requestDto = InfoRegisterDto.builder()
                 .twitterAccount(twitterAccount)
-                .keyword(keyword)
+                .searchKeyword(keyword)
                 .build();
         infoRegisterRepository.save(requestDto.toEntity());
 
