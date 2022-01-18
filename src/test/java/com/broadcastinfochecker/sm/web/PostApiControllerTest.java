@@ -63,171 +63,171 @@ public class PostApiControllerTest {
     }
 
     // menuInfoRegister 테스트
-    @Test
-    public void testMenuInfoRegister01() throws Exception {
-        // 조건 설정
-        String twitterAccount = "testAccount";
-        String keyword = "testKeyword";
-        InfoRegisterDto requestDto = InfoRegisterDto.builder()
-                .twitterAccount(twitterAccount)
-                .searchKeyword(keyword)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/account/register";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
-        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
-    }
-
-    // menuInfoGetList 테스트
-    @Test
-    public void testMenuInfoGetList01() throws Exception {
-        // 조건 설정
-        String twitterAccount = "testAccount2";
-        String keyword = "testKeyword2";
-        InfoRegisterDto requestDto = InfoRegisterDto.builder()
-                .twitterAccount(twitterAccount)
-                .searchKeyword(keyword)
-                .build();
-        infoRegisterRepository.save(requestDto.toEntity());
-
-        String url = "http://localhost:" + port + "/api/get/info";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
-        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
-    }
-
-    // menuInfoGetListRegister 테스트
-    @Test
-    public void testMenuInfoGetListRegister01() throws Exception {
-        // 조건 설정
-        String broadcastTitle = "broadcastTitle";
-        String broadcastContext = "broadcastContext";
-        String broadcastTag = "broadcastTag";
-        LocalDateTime broadcastDate = LocalDateTime.now().withNano(0);
-        String tweetAccount = "tweetAccount";
-        String source = "source";
-        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
-                .broadcastTitle(broadcastTitle)
-                .broadcastContext(broadcastContext)
-                .broadcastTag(broadcastTag)
-                .broadcastDate(broadcastDate)
-                .tweetAccount(tweetAccount)
-                .source(source)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/info/register";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(List.of(requestDto))))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<BroadcastInfo> all = broadcastInfoRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(broadcastTitle);
-        assertThat(all.get(0).getContext()).isEqualTo(broadcastContext);
-        assertThat(all.get(0).getTag()).isEqualTo(broadcastTag);
-        assertThat(all.get(0).getBroadcastDate()).isEqualTo(broadcastDate);
-        assertThat(all.get(0).getTweetAccount()).isEqualTo(tweetAccount);
-        assertThat(all.get(0).getSource()).isEqualTo(source);
-    }
-
-    // menuInfoCheckUpdate 테스트
-    @Test
-    public void testMenuInfoCheckUpdate01() throws Exception {
-        // 조건 설정
-        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
-                .broadcastTitle("1")
-                .broadcastContext("2")
-                .broadcastTag("3")
-                .broadcastDate(LocalDateTime.now())
-                .tweetAccount("4")
-                .source("5")
-                .build();
-        broadcastInfoRepository.save(requestDto.toEntity());
-
-        // 갱신 대상 id 습득용
-        List<BroadcastInfo> testList = broadcastInfoRepository.findAll();
-
-        String broadcastTitle = "broadcastTitle";
-        String broadcastContext = "broadcastContext";
-        String broadcastTag = "broadcastTag";
-        LocalDateTime broadcastDate = LocalDateTime.now().withNano(0);
-        String tweetAccount = "tweetAccount";
-        String source = "source";
-        InfoGetListRegisterDto requestDto2 = InfoGetListRegisterDto.builder()
-                .id(testList.get(0).getId().toString())
-                .broadcastTitle(broadcastTitle)
-                .broadcastContext(broadcastContext)
-                .broadcastTag(broadcastTag)
-                .broadcastDate(broadcastDate)
-                .tweetAccount(tweetAccount)
-                .source(source)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/info/update";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(List.of(requestDto2))))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<BroadcastInfo> all = broadcastInfoRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(broadcastTitle);
-        assertThat(all.get(0).getContext()).isEqualTo(broadcastContext);
-        assertThat(all.get(0).getTag()).isEqualTo(broadcastTag);
-        assertThat(all.get(0).getBroadcastDate()).isEqualTo(broadcastDate);
-        assertThat(all.get(0).getTweetAccount()).isEqualTo(tweetAccount);
-        assertThat(all.get(0).getSource()).isEqualTo(source);
-    }
-
-    // menuInfoCheckDelete 테스트
-    @Test
-    public void testMenuInfoCheckDelete01() throws Exception {
-        // 조건 설정
-        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
-                .broadcastTitle("1")
-                .broadcastContext("2")
-                .broadcastTag("3")
-                .broadcastDate(LocalDateTime.now())
-                .tweetAccount("4")
-                .source("5")
-                .build();
-        broadcastInfoRepository.save(requestDto.toEntity());
-
-        // 삭제 대상 id 습득용
-        List<BroadcastInfo> testList = broadcastInfoRepository.findAll();
-        String id = testList.get(0).getId().toString();
-        String url = "http://localhost:" + port + "/api/info/delete";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(List.of(id))))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-        assertThat(all.size()).isEqualTo(0);
-    }
+//    @Test
+//    public void testMenuInfoRegister01() throws Exception {
+//        // 조건 설정
+//        String twitterAccount = "testAccount";
+//        String keyword = "testKeyword";
+//        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+//                .twitterAccount(twitterAccount)
+//                .searchKeyword(keyword)
+//                .build();
+//
+//        String url = "http://localhost:" + port + "/api/account/register";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(requestDto)))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+//        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
+//        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
+//    }
+//
+//    // menuInfoGetList 테스트
+//    @Test
+//    public void testMenuInfoGetList01() throws Exception {
+//        // 조건 설정
+//        String twitterAccount = "testAccount2";
+//        String keyword = "testKeyword2";
+//        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+//                .twitterAccount(twitterAccount)
+//                .searchKeyword(keyword)
+//                .build();
+//        infoRegisterRepository.save(requestDto.toEntity());
+//
+//        String url = "http://localhost:" + port + "/api/get/info";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(requestDto)))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+//        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
+//        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
+//    }
+//
+//    // menuInfoGetListRegister 테스트
+//    @Test
+//    public void testMenuInfoGetListRegister01() throws Exception {
+//        // 조건 설정
+//        String broadcastTitle = "broadcastTitle";
+//        String broadcastContext = "broadcastContext";
+//        String broadcastTag = "broadcastTag";
+//        LocalDateTime broadcastDate = LocalDateTime.now().withNano(0);
+//        String tweetAccount = "tweetAccount";
+//        String source = "source";
+//        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
+//                .broadcastTitle(broadcastTitle)
+//                .broadcastContext(broadcastContext)
+//                .broadcastTag(broadcastTag)
+//                .broadcastDate(broadcastDate)
+//                .tweetAccount(tweetAccount)
+//                .source(source)
+//                .build();
+//
+//        String url = "http://localhost:" + port + "/api/info/register";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(List.of(requestDto))))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<BroadcastInfo> all = broadcastInfoRepository.findAll();
+//        assertThat(all.get(0).getTitle()).isEqualTo(broadcastTitle);
+//        assertThat(all.get(0).getContext()).isEqualTo(broadcastContext);
+//        assertThat(all.get(0).getTag()).isEqualTo(broadcastTag);
+//        assertThat(all.get(0).getBroadcastDate()).isEqualTo(broadcastDate);
+//        assertThat(all.get(0).getTweetAccount()).isEqualTo(tweetAccount);
+//        assertThat(all.get(0).getSource()).isEqualTo(source);
+//    }
+//
+//    // menuInfoCheckUpdate 테스트
+//    @Test
+//    public void testMenuInfoCheckUpdate01() throws Exception {
+//        // 조건 설정
+//        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
+//                .broadcastTitle("1")
+//                .broadcastContext("2")
+//                .broadcastTag("3")
+//                .broadcastDate(LocalDateTime.now())
+//                .tweetAccount("4")
+//                .source("5")
+//                .build();
+//        broadcastInfoRepository.save(requestDto.toEntity());
+//
+//        // 갱신 대상 id 습득용
+//        List<BroadcastInfo> testList = broadcastInfoRepository.findAll();
+//
+//        String broadcastTitle = "broadcastTitle";
+//        String broadcastContext = "broadcastContext";
+//        String broadcastTag = "broadcastTag";
+//        LocalDateTime broadcastDate = LocalDateTime.now().withNano(0);
+//        String tweetAccount = "tweetAccount";
+//        String source = "source";
+//        InfoGetListRegisterDto requestDto2 = InfoGetListRegisterDto.builder()
+//                .id(testList.get(0).getId().toString())
+//                .broadcastTitle(broadcastTitle)
+//                .broadcastContext(broadcastContext)
+//                .broadcastTag(broadcastTag)
+//                .broadcastDate(broadcastDate)
+//                .tweetAccount(tweetAccount)
+//                .source(source)
+//                .build();
+//
+//        String url = "http://localhost:" + port + "/api/info/update";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(List.of(requestDto2))))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<BroadcastInfo> all = broadcastInfoRepository.findAll();
+//        assertThat(all.get(0).getTitle()).isEqualTo(broadcastTitle);
+//        assertThat(all.get(0).getContext()).isEqualTo(broadcastContext);
+//        assertThat(all.get(0).getTag()).isEqualTo(broadcastTag);
+//        assertThat(all.get(0).getBroadcastDate()).isEqualTo(broadcastDate);
+//        assertThat(all.get(0).getTweetAccount()).isEqualTo(tweetAccount);
+//        assertThat(all.get(0).getSource()).isEqualTo(source);
+//    }
+//
+//    // menuInfoCheckDelete 테스트
+//    @Test
+//    public void testMenuInfoCheckDelete01() throws Exception {
+//        // 조건 설정
+//        InfoGetListRegisterDto requestDto = InfoGetListRegisterDto.builder()
+//                .broadcastTitle("1")
+//                .broadcastContext("2")
+//                .broadcastTag("3")
+//                .broadcastDate(LocalDateTime.now())
+//                .tweetAccount("4")
+//                .source("5")
+//                .build();
+//        broadcastInfoRepository.save(requestDto.toEntity());
+//
+//        // 삭제 대상 id 습득용
+//        List<BroadcastInfo> testList = broadcastInfoRepository.findAll();
+//        String id = testList.get(0).getId().toString();
+//        String url = "http://localhost:" + port + "/api/info/delete";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(List.of(id))))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+//        assertThat(all.size()).isEqualTo(0);
+//    }
 }
