@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,29 +64,62 @@ public class PostApiControllerTest {
     }
 
     // menuInfoRegister 테스트
-//    @Test
-//    public void testMenuInfoRegister01() throws Exception {
-//        // 조건 설정
-//        String twitterAccount = "testAccount";
-//        String keyword = "testKeyword";
-//        InfoRegisterDto requestDto = InfoRegisterDto.builder()
-//                .twitterAccount(twitterAccount)
-//                .searchKeyword(keyword)
-//                .build();
-//
-//        String url = "http://localhost:" + port + "/api/account/register";
-//
-//        // 테스트 실행
-//        mvc.perform(post(url)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(requestDto)))
-//                .andExpect(status().isOk());
-//
-//        // 결과 비교
-//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-//        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
-//        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
-//    }
+    @Test
+    public void testMenuInfoRegister01() throws Exception {
+        // 조건 설정
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/account/register";
+
+        // 테스트 실행
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
+        // 결과 비교
+        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
+        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
+    }
+
+    // menuInfoRegister 테스트
+    @Test
+    public void testMenuInfoRemove01() throws Exception {
+        // 삭제 할 내용 업로드
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto targetDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        infoRegisterRepository.save(targetDto.toEntity());
+
+        // 조건 설정
+        List<InfoRegisterDto> requestList = new ArrayList<>();
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        requestList.add(requestDto);
+
+        String url = "http://localhost:" + port + "/api/account/remove";
+
+        // 테스트 실행
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestList)))
+                .andExpect(status().isOk());
+
+        // 결과 비교
+        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+        assertThat(all.size()).isEqualTo(0);
+    }
 //
 //    // menuInfoGetList 테스트
 //    @Test
