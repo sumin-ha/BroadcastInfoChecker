@@ -36,9 +36,7 @@ dependencies {
     implementation 'com.h2database:h2'
 
     implementation 'io.github.redouane59.twitter:twittered:2.2'
-    testImplementation("org.junit.vintage:junit-vintage-engine") {
-        exclude group: "org.hamcrest", module: "hamcrest-core"
-    }
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -52,4 +50,7 @@ dependencies {
 //    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 //    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 //    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+//    testImplementation("org.junit.vintage:junit-vintage-engine") {
+//        exclude group: "org.hamcrest", module: "hamcrest-core"
+//    }
 }
