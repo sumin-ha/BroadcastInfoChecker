@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 트위터 관련 된 처리를 담당하는 서비스
  */
-@PropertySource("classpath:../application-test.properties")
+@PropertySource("classpath:app/application-account.properties")
 @RequiredArgsConstructor
 @Service
 public class TwitterService {
