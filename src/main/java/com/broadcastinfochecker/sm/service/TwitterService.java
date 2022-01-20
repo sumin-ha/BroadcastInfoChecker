@@ -21,18 +21,17 @@ import java.util.List;
 /**
  * 트위터 관련 된 처리를 담당하는 서비스
  */
-@PropertySource("classpath:app/application-account.properties")
 @RequiredArgsConstructor
 @Service
 public class TwitterService {
 
-    @Value("${twitter.apiKey}")
+    @Value("${twitter.apiKey:@null}")
     private String apiKey;
-    @Value("${twitter.apiSecretKey}")
+    @Value("${twitter.apiSecretKey:@null}")
     private String apiSecretKey;
-    @Value("${twitter.accessToken}")
+    @Value("${twitter.accessToken:@null}")
     private String accessToken;
-    @Value("${twitter.accessTokenSecret}")
+    @Value("${twitter.accessTokenSecret:@null}")
     private String accessTokenSecret;
 
     private final BroadcastInfoTempRepository broadcastInfoTempRepository;
