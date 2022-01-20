@@ -94,7 +94,7 @@ public class PostApiControllerTest {
         doReturn(mockList).when(infoRegisterRepository).findAll();
         Long returnValue = 0L;
         doNothing().when(infoRegisterRepository).delete(mockObject);
-        doReturn(returnValue).when(infoRegisterRepository).save(any());
+        doReturn(mockObject).when(infoRegisterRepository).save(any());
 
         // 테스트 실행
         mvc.perform(post(url)
