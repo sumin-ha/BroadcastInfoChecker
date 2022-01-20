@@ -4,6 +4,7 @@ import com.broadcastinfochecker.sm.domain.posts.BroadcastInfo;
 import com.broadcastinfochecker.sm.domain.posts.BroadcastInfoRepository;
 import com.broadcastinfochecker.sm.domain.posts.TweetInfoRegister;
 import com.broadcastinfochecker.sm.domain.posts.TweetInfoRegisterRepository;
+import com.broadcastinfochecker.sm.service.TwitterService;
 import com.broadcastinfochecker.sm.web.dto.InfoGetListRegisterDto;
 import com.broadcastinfochecker.sm.web.dto.InfoRegisterDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,9 @@ public class PostApiControllerTest {
     private int port;
 
     private MockMvc mvc;
+
+    @MockBean
+    private TwitterService twitterLoadingService;
 
     @MockBean
     private TweetInfoRegisterRepository infoRegisterRepository;
