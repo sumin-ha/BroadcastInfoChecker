@@ -109,7 +109,6 @@ public class PostApiControllerTest {
                 .twitterAccount(twitterAccount)
                 .searchKeyword(keyword)
                 .build();
-        infoRegisterRepository.save(targetDto.toEntity());
 
         // 조건 설정
         List<InfoRegisterDto> requestList = new ArrayList<>();
