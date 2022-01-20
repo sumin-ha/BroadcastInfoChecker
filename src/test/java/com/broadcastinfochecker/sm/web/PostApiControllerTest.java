@@ -30,10 +30,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -73,8 +73,56 @@ public class PostApiControllerTest {
     }
 
     // menuInfoRegister 테스트
+    /**
+     * 정상 테스트
+     *
+     * 입력값 트위터 계정명과 일치하는 데이터가 DB에 존재하지 않음, 신규 등록.
+     * 저장에 성공하여 데이터의 id를 리턴받음.
+     *
+     * @throws Exception
+     */
     @Test
     public void testMenuInfoRegister01() throws Exception {
+        // 조건 설정
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/account/register";
+
+        // Mock 설정
+        TweetInfoRegister mockObject =
+                TweetInfoRegister.builder().twitterAccount(twitterAccount)
+                        .searchKeyword(keyword).build();
+        doReturn(new ArrayList<>()).when(infoRegisterRepository).findAll();
+        Long returnValue = 0L;
+        doReturn(mockObject).when(infoRegisterRepository).save(any());
+
+        // 테스트 실행
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
+        // 결과 체크
+        verify(infoRegisterRepository, times(1)).findAll();
+        verify(infoRegisterRepository, never()).delete(any());
+        verify(infoRegisterRepository, times(1)).save(any());
+    }
+
+    /**
+     * 정상 테스트
+     *
+     * 입력값 트위터 계정명과 일치하는 데이터가 DB에 존재함, 수정 등록 (삭제 후 재등록)
+     * 저장에 성공하여 데이터의 id를 리턴받음.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testMenuInfoRegister02() throws Exception {
         // 조건 설정
         String twitterAccount = "testAccount";
         String keyword = "testKeyword";
@@ -102,10 +150,10 @@ public class PostApiControllerTest {
                         .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
-        // 결과 비교
-        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-        assertThat(all.get(0).getTwitterAccount()).isEqualTo(twitterAccount);
-        assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
+        // 결과 체크
+        verify(infoRegisterRepository, times(1)).findAll();
+        verify(infoRegisterRepository, times(1)).delete(any());
+        verify(infoRegisterRepository, times(1)).save(any());
     }
 
 //    // menuInfoRegister 테스트

@@ -33,9 +33,6 @@ public class PostApiService {
             // 이미 등록 된 계정 정보라면 해당 정보를 삭제함.
             if(dto.getTwitterAccount().equals(requestDto.getTwitterAccount())) {
                 infoRegisterRepository.delete(dto);
-                if(requestDto.getSearchKeyword().isEmpty()) {
-                    return 0L;
-                }
             }
         }
         // 등록
