@@ -25,13 +25,13 @@ import java.util.List;
 @Service
 public class TwitterService {
 
-    @Value("${twitter.apiKey:@null}")
+    @Value("${twitter.apiKey}")
     private String apiKey;
-    @Value("${twitter.apiSecretKey:@null}")
+    @Value("${twitter.apiSecretKey}")
     private String apiSecretKey;
-    @Value("${twitter.accessToken:@null}")
+    @Value("${twitter.accessToken}")
     private String accessToken;
-    @Value("${twitter.accessTokenSecret:@null}")
+    @Value("${twitter.accessTokenSecret}")
     private String accessTokenSecret;
 
     private final BroadcastInfoTempRepository broadcastInfoTempRepository;

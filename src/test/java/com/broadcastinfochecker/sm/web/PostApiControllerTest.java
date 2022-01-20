@@ -86,6 +86,9 @@ public class PostApiControllerTest {
                         .searchKeyword(keyword).build();
         mockList.add(mockObject);
         doReturn(mockList).when(infoRegisterRepository).findAll();
+        Long returnValue = 0L;
+        doReturn(returnValue).when(infoRegisterRepository).delete(mockObject);
+        doReturn(returnValue).when(infoRegisterRepository).save(mockObject);
 
         // 테스트 실행
         mvc.perform(post(url)
@@ -99,40 +102,40 @@ public class PostApiControllerTest {
         assertThat(all.get(0).getSearchKeyword()).isEqualTo(keyword);
     }
 
-    // menuInfoRegister 테스트
-    @Test
-    public void testMenuInfoRemove01() throws Exception {
-        // 삭제 할 내용 업로드
-        String twitterAccount = "testAccount";
-        String keyword = "testKeyword";
-        InfoRegisterDto targetDto = InfoRegisterDto.builder()
-                .twitterAccount(twitterAccount)
-                .searchKeyword(keyword)
-                .build();
-
-        // 조건 설정
-        List<InfoRegisterDto> requestList = new ArrayList<>();
-        InfoRegisterDto requestDto = InfoRegisterDto.builder()
-                .twitterAccount(twitterAccount)
-                .searchKeyword(keyword)
-                .build();
-        requestList.add(requestDto);
-
-        // Mock 설정
-        doReturn(new ArrayList<>()).when(infoRegisterRepository).findAll();
-
-        String url = "http://localhost:" + port + "/api/account/remove";
-
-        // 테스트 실행
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(requestList)))
-                .andExpect(status().isOk());
-
-        // 결과 비교
-        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-        assertThat(all.size()).isEqualTo(0);
-    }
+//    // menuInfoRegister 테스트
+//    @Test
+//    public void testMenuInfoRemove01() throws Exception {
+//        // 삭제 할 내용 업로드
+//        String twitterAccount = "testAccount";
+//        String keyword = "testKeyword";
+//        InfoRegisterDto targetDto = InfoRegisterDto.builder()
+//                .twitterAccount(twitterAccount)
+//                .searchKeyword(keyword)
+//                .build();
+//
+//        // 조건 설정
+//        List<InfoRegisterDto> requestList = new ArrayList<>();
+//        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+//                .twitterAccount(twitterAccount)
+//                .searchKeyword(keyword)
+//                .build();
+//        requestList.add(requestDto);
+//
+//        // Mock 설정
+//        doReturn(new ArrayList<>()).when(infoRegisterRepository).findAll();
+//
+//        String url = "http://localhost:" + port + "/api/account/remove";
+//
+//        // 테스트 실행
+//        mvc.perform(post(url)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(requestList)))
+//                .andExpect(status().isOk());
+//
+//        // 결과 비교
+//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
+//        assertThat(all.size()).isEqualTo(0);
+//    }
 //
 //    // menuInfoGetList 테스트
 //    @Test
