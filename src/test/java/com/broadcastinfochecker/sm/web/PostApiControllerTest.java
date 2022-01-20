@@ -8,7 +8,6 @@ import com.broadcastinfochecker.sm.web.dto.InfoGetListRegisterDto;
 import com.broadcastinfochecker.sm.web.dto.InfoRegisterDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
