@@ -53,11 +53,11 @@ public class PostApiControllerTest {
 //        infoRegisterRepository.deleteAll();
 //        broadcastInfoRepository.deleteAll();
 //    }
-
+//
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired ObjectMapper objectMapper;
+    //@Autowired ObjectMapper objectMapper;
 
     @Before
     public void setup() {

@@ -11,6 +11,7 @@ import io.github.redouane59.twitter.dto.user.UserV2;
 import io.github.redouane59.twitter.signature.TwitterCredentials;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * 트위터 관련 된 처리를 담당하는 서비스
  */
+@PropertySource("classpath:../application-test.properties")
 @RequiredArgsConstructor
 @Service
 public class TwitterService {
