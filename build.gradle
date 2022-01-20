@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.20'
     implementation 'com.h2database:h2'
     implementation 'junit:junit:4.13.1'
+    implementation 'org.mockito:mockito-core:3.7.7'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
