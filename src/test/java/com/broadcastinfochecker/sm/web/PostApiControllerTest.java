@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -91,7 +92,7 @@ public class PostApiControllerTest {
         mockList.add(mockObject);
         doReturn(mockList).when(infoRegisterRepository).findAll();
         Long returnValue = 0L;
-        doReturn(returnValue).when(infoRegisterRepository).delete(mockObject);
+        doNothing().when(infoRegisterRepository).delete(mockObject);
         doReturn(returnValue).when(infoRegisterRepository).save(mockObject);
 
         // 테스트 실행
