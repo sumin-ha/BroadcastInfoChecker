@@ -23,10 +23,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -156,40 +158,165 @@ public class PostApiControllerTest {
         verify(infoRegisterRepository, times(1)).save(any());
     }
 
-//    // menuInfoRegister 테스트
-//    @Test
-//    public void testMenuInfoRemove01() throws Exception {
-//        // 삭제 할 내용 업로드
-//        String twitterAccount = "testAccount";
-//        String keyword = "testKeyword";
-//        InfoRegisterDto targetDto = InfoRegisterDto.builder()
-//                .twitterAccount(twitterAccount)
-//                .searchKeyword(keyword)
-//                .build();
-//
-//        // 조건 설정
-//        List<InfoRegisterDto> requestList = new ArrayList<>();
-//        InfoRegisterDto requestDto = InfoRegisterDto.builder()
-//                .twitterAccount(twitterAccount)
-//                .searchKeyword(keyword)
-//                .build();
-//        requestList.add(requestDto);
-//
-//        // Mock 설정
-//        doReturn(new ArrayList<>()).when(infoRegisterRepository).findAll();
-//
-//        String url = "http://localhost:" + port + "/api/account/remove";
-//
-//        // 테스트 실행
-//        mvc.perform(post(url)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(requestList)))
-//                .andExpect(status().isOk());
-//
-//        // 결과 비교
-//        List<TweetInfoRegister> all = infoRegisterRepository.findAll();
-//        assertThat(all.size()).isEqualTo(0);
-//    }
+    // menuInfoRemove 테스트
+    /**
+     * 정상 테스트
+     *
+     * 입력값 트위터 계정명과 일치하는 데이터가 DB에 존재하지않음.
+     * 삭제 실행하지 않음.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testMenuInfoRemove01() throws Exception {
+        // 삭제 할 내용 업로드
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto targetDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+
+        // 조건 설정
+        List<InfoRegisterDto> requestList = new ArrayList<>();
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        requestList.add(requestDto);
+
+        // Mock 설정
+        Optional<TweetInfoRegister> mockReturnObject = Optional.empty();
+        doReturn(new ArrayList<>()).when(infoRegisterRepository).findAll();
+        Long returnValue = 0L;
+        doReturn(mockReturnObject).when(infoRegisterRepository).findById(any());
+        doNothing().when(infoRegisterRepository).deleteAll(any());
+
+        String url = "http://localhost:" + port + "/api/account/remove";
+
+        // 테스트 실행
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestList)))
+                .andExpect(status().isOk());
+
+        // 결과 체크
+        verify(infoRegisterRepository, times(1)).findAll();
+        verify(infoRegisterRepository, never()).findById(any());
+        verify(infoRegisterRepository, times(1)).deleteAll(any());
+    }
+
+    /**
+     * 정상 테스트
+     *
+     * 입력값 트위터 계정명과 일치하는 데이터가 DB에 존재함.
+     * 입력값 데이터 id와 일치하는 데이터가 DB에 존재함.
+     * 삭제 실행함.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testMenuInfoRemove02() throws Exception {
+        // 삭제 할 내용 업로드
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto targetDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+
+        // 조건 설정
+        List<InfoRegisterDto> requestList = new ArrayList<>();
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        requestList.add(requestDto);
+
+        // Mock 설정
+        List<TweetInfoRegister> mockList = new ArrayList<>();
+        TweetInfoRegister mockTweetInfoRegister = TweetInfoRegister.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        Optional<TweetInfoRegister> mockReturnObject =
+                Optional.of(mockTweetInfoRegister);
+        mockList.add(mockTweetInfoRegister);
+        doReturn(mockList).when(infoRegisterRepository).findAll();
+        Long returnValue = 0L;
+        doReturn(mockReturnObject).when(infoRegisterRepository).findById(any());
+        doNothing().when(infoRegisterRepository).deleteAll(any());
+
+        String url = "http://localhost:" + port + "/api/account/remove";
+
+        // 테스트 실행
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestList)))
+                .andExpect(status().isOk());
+
+        // 결과 체크
+        verify(infoRegisterRepository, times(1)).findAll();
+        verify(infoRegisterRepository, times(1)).findById(any());
+        verify(infoRegisterRepository, times(1)).deleteAll(any());
+    }
+
+    /**
+     * 정상 테스트
+     *
+     * 입력값 트위터 계정명과 일치하는 데이터가 DB에 존재함.
+     * 입력값 데이터 id와 일치하는 데이터가 DB에 존재하지 않음.
+     * 삭제 실행하지 않음.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testMenuInfoRemove03() throws Exception {
+        // 삭제 할 내용 업로드
+        String twitterAccount = "testAccount";
+        String keyword = "testKeyword";
+        InfoRegisterDto targetDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+
+        // 조건 설정
+        List<InfoRegisterDto> requestList = new ArrayList<>();
+        InfoRegisterDto requestDto = InfoRegisterDto.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        requestList.add(requestDto);
+
+        // Mock 설정
+        List<TweetInfoRegister> mockList = new ArrayList<>();
+        TweetInfoRegister mockTweetInfoRegister = TweetInfoRegister.builder()
+                .twitterAccount(twitterAccount)
+                .searchKeyword(keyword)
+                .build();
+        Optional<TweetInfoRegister> mockReturnObject =
+                Optional.empty();
+        mockList.add(mockTweetInfoRegister);
+        doReturn(mockList).when(infoRegisterRepository).findAll();
+        Long returnValue = 0L;
+        doReturn(mockReturnObject).when(infoRegisterRepository).findById(any());
+        doNothing().when(infoRegisterRepository).deleteAll(any());
+
+        String url = "http://localhost:" + port + "/api/account/remove";
+
+        // 테스트 실행
+        try {
+            mvc.perform(post(url)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(new ObjectMapper().writeValueAsString(requestList)))
+                    .andExpect(status().isOk());
+        } catch(IllegalArgumentException e) {
+            // 결과 체크
+            assertThat(e.getClass().getSimpleName()).isEqualTo(IllegalArgumentException.class.getSimpleName());
+        } catch(NestedServletException e) {
+            assertThat(e.getClass().getSimpleName()).isEqualTo(NestedServletException.class.getSimpleName());
+        }
+    }
 //
 //    // menuInfoGetList 테스트
 //    @Test
