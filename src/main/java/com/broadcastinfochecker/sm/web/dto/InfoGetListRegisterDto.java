@@ -48,4 +48,9 @@ public class InfoGetListRegisterDto {
         this.tweetAccount = tweetAccount;
         this.source = source;
     }
+
+    // 테스트용 셋 메서드
+    public void setTestBroadcastDate(String broadcastDate) {
+        this.broadcastDate = broadcastDate;
+    }
 }
